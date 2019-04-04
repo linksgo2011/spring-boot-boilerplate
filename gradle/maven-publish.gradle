@@ -1,0 +1,52 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    repositories {
+        maven {
+            url "${System.env.NEXUS_BASE_URI}/repository/maven-releases/"
+            credentials {
+                username "$System.env.NEXUS_CI_USER"
+                password "$System.env.NEXUS_CI_PASS"
+            }
+        }
+    }
+
+    publications {
+        fatjar(MavenPublication) {
+            groupId "$project.group"
+            artifactId "atlas-backend"
+            version "$gitVersionName"
+
+            artifact "$buildDir/libs/${project.name}.jar"
+        }
+
+        testArtifacts(MavenPublication) {
+            groupId "$project.group"
+            artifactId "atlas-backend-test"
+            version "$gitVersionName"
+
+            artifact file("$buildDir/distributions/atlas-test.zip")
+        }
+    }
+}
+
+task archiveTestArtifacts(type: Zip, dependsOn: 'jar') {
+    baseName = 'atlas-test'
+
+    from 'gradlew'
+    from 'build.gradle'
+    from 'gradle.properties'
+    from 'settings.gradle'
+
+    from('gradle') {
+        into 'gradle'
+    }
+    from('build/classes') {
+        into 'build/classes'
+    }
+    from('build/resources') {
+        into 'build/resources'
+    }
+}
+
+publish.dependsOn(archiveTestArtifacts)

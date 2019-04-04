@@ -1,0 +1,12 @@
+gitProperties {
+    dateFormat = "yyyy-MM-dd'T'HH:mmZ"
+}
+
+springBoot {
+    buildInfo {
+        [
+                'group'  : "$rootProject.name",
+                'version': "$gitVersionName",
+        ]
+    }
+}

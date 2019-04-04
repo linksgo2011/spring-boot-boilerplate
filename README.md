@@ -16,3 +16,17 @@ Launch a spring boot based project quickly with basic features
 - JMS
 
 
+## run 
+
+- start mysql & redis `docker-compose --file docker/docker-compose.yml up`
+- run spring boot application `./gradlew bootRun`
+
+## You may need to change 
+
+- 
+
+## TODO 
+
+- swagger 
+- API contract test
+

@@ -1,44 +1,137 @@
-plugins {
-	id 'org.springframework.boot' version '2.1.3.RELEASE'
-	id 'java'
-}
+buildscript {
+	ext {
+		snippetsDir = file('build/generated-snippets')
+		restdocsVersion = '1.2.3.RELEASE'
+		flywayVersion = '3.2.1'
+		hibernateVersion = '5.0.12.Final'
+	}
 
-apply plugin: 'io.spring.dependency-management'
-
-group = 'cn.printf'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+	dependencies {
+		classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.20"
 	}
 }
 
+plugins {
+	id 'org.springframework.boot' version '2.1.3.RELEASE'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.7"
+	id "io.spring.dependency-management" version "1.0.3.RELEASE"
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+
+if (buildStage()) {
+	apply plugin: "com.gorylenko.gradle-git-properties"
+	apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
+	apply from: "${rootProject.projectDir}/gradle/findbugs.gradle"
+	apply from: "${rootProject.projectDir}/gradle/git-hooks.gradle"
+	apply from: "${rootProject.projectDir}/gradle/build-version.gradle"
+	apply from: "${rootProject.projectDir}/gradle/boot-info.gradle"
+	apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
+}
+
+group = 'cn.printf'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+
+tasks.withType(JavaCompile) { options.encoding = 'utf-8' }
+
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-activemq'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-cache'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.springframework.session:spring-session-data-redis'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+	// core
+	compile 'org.springframework.boot:spring-boot-starter-actuator'
+
+	compileOnly "org.projectlombok:lombok"
+	testCompileOnly "org.projectlombok:lombok"
+
+	// web
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile 'org.springframework.boot:spring-boot-starter-webflux'
+	compile 'org.springframework.boot:spring-boot-starter-hateoas'
+	compile 'org.springframework.boot:spring-boot-starter-security'
+
+	// mail
+	compile 'org.springframework.boot:spring-boot-starter-mail'
+
+	// MQ
+	compile 'org.springframework.boot:spring-boot-starter-activemq'
+	compile 'org.springframework.session:spring-session-data-redis'
+
+	// database
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+	compile "mysql:mysql-connector-java:6.0.6"
+	compile "com.querydsl:querydsl-jpa:4.0.9"
+	compile 'org.flywaydb:flyway-core'
+	compile "com.querydsl:querydsl-jpa:4.0.9"
+
+	// cache
+	compile("org.springframework.boot:spring-boot-starter-cache")
+	compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.6.2'
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
+	compile group: 'org.hibernate', name: 'hibernate-ehcache', version: hibernateVersion
+
+	// model mapper
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '1.1.1'
+
+	// test
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+
+}
+
+idea {
+	project {
+
+		jdkName = '1.8'
+		languageLevel = '1.8'
+
+		ipr.withXml { xmlFile ->
+			// setup Git root
+			xmlFile.asNode().component.find { it.@name == 'VcsDirectoryMappings' }.replaceNode {
+				component(name: 'VcsDirectoryMappings') {
+					mapping(directory: "", vcs: "Git")
+					mapping(directory: "\$PROJECT_DIR\$", vcs: 'Git')
+				}
+			}
+
+			// setup annotationProcessing for lombok
+			xmlFile.asNode().component.find {
+				it.@name == 'CompilerConfiguration'
+			}.annotationProcessing.replaceNode {
+				annotationProcessing() {
+					profile(default: "true", name: "Default", enabled: 'true')
+				}
+			}
+		}
+	}
+
+	module {
+		scopes.COMPILE.plus += [configurations.compileOnly]
+		sourceDirs += file('src/querydsl/java')
+	}
+}
+
+querydsl {
+	jpa = true
+}
+
+def buildStage() {
+	String isBuildStage = System.getProperty("buildStage")
+	print "property isBuildStage=${isBuildStage}"
+	def b = isBuildStage == null || Boolean.valueOf(isBuildStage)
+	print "final isBuildStage=${b}"
+	return b
 }
