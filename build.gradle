@@ -1,9 +1,8 @@
 buildscript {
 	ext {
 		snippetsDir = file('build/generated-snippets')
-		restdocsVersion = '1.2.3.RELEASE'
 		flywayVersion = '3.2.1'
-		hibernateVersion = '5.0.12.Final'
+		hibernateVersion = '5.3.7.Final'
 	}
 
 	dependencies {
@@ -67,6 +66,7 @@ dependencies {
 
 	// MQ
 	compile 'org.springframework.boot:spring-boot-starter-activemq'
+	compile 'org.springframework.boot:spring-boot-starter-data-redis'
 	compile 'org.springframework.session:spring-session-data-redis'
 
 	// database
@@ -75,7 +75,6 @@ dependencies {
 	compile "mysql:mysql-connector-java:6.0.6"
 	compile "com.querydsl:querydsl-jpa:4.0.9"
 	compile 'org.flywaydb:flyway-core'
-	compile "com.querydsl:querydsl-jpa:4.0.9"
 
 	// cache
 	compile("org.springframework.boot:spring-boot-starter-cache")

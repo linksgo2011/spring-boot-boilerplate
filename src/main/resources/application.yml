@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: local
   jackson:
     dateFormat: yyyy-MM-dd'T'HH:mm:ssZZ
     timeZone: UTC
@@ -30,12 +30,13 @@ spring:
     namespace: atlas
   cache:
     type: caffeine
+  redis:
+    host: localhost
+    port: 6379
 
 server:
   port: 8080
-  contextPath: /spring-boot-boilerplate
 
-# so that we can proxy all endpoints with a prefix which makes reversed proxypass easier
 management:
   health:
     db:
