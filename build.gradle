@@ -33,7 +33,7 @@ if (buildStage()) {
 }
 
 group = 'cn.printf'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -89,7 +89,7 @@ dependencies {
 
     // test
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    
+
     runtime('org.springframework.boot:spring-boot-devtools')
 }
 

@@ -10,5 +10,5 @@ import org.springframework.hateoas.core.Relation;
 @EqualsAndHashCode(callSuper = false)
 @Relation(value = "user", collectionRelation = "users")
 public class UserResponse extends HalResponse {
-   private String username;
+    private String username;
 }

@@ -3,7 +3,8 @@ apply plugin: 'maven-publish'
 publishing {
     repositories {
         maven {
-            url "${System.env.NEXUS_BASE_URI}/repository/maven-releases/"
+            url "${System.env.NEXUS_BASE_URI}/repository/maven-snapshots/"
+
             credentials {
                 username "$System.env.NEXUS_CI_USER"
                 password "$System.env.NEXUS_CI_PASS"
@@ -14,24 +15,24 @@ publishing {
     publications {
         fatjar(MavenPublication) {
             groupId "$project.group"
-            artifactId "atlas-backend"
+            artifactId "spring-boot-boilerplate"
             version "$gitVersionName"
 
-            artifact "$buildDir/libs/${project.name}.jar"
+            artifact "$buildDir/libs/${project.name}-1.0.0.jar"
         }
 
         testArtifacts(MavenPublication) {
             groupId "$project.group"
-            artifactId "atlas-backend-test"
+            artifactId "boilerplate-test"
             version "$gitVersionName"
 
-            artifact file("$buildDir/distributions/atlas-test.zip")
+            artifact file("$buildDir/distributions/boilerplate-test-1.0.0.zip")
         }
     }
 }
 
 task archiveTestArtifacts(type: Zip, dependsOn: 'jar') {
-    baseName = 'atlas-test'
+    baseName = 'boilerplate-test'
 
     from 'gradlew'
     from 'build.gradle'

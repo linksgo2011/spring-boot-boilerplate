@@ -17,8 +17,10 @@ public class UserController {
 
     @RequestMapping("/users")
     public Collection<UserResponse> getUsers() {
-        return userService.getUserList().stream().map(
-                user -> UserResponse.builder().username(user.getUsername()).build()
-        ).collect(Collectors.toList());
+        return userService
+                .getUserList()
+                .stream()
+                .map(user -> UserResponse.builder().username(user.getUsername())
+                        .build()).collect(Collectors.toList());
     }
 }
