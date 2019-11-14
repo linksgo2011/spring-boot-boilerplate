@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: dev
   jackson:
     dateFormat: yyyy-MM-dd'T'HH:mm:ssZZ
     timeZone: UTC
@@ -27,7 +27,7 @@ spring:
             mode: ENABLE_SELECTIVE
   session:
     store-type: redis
-    namespace: atlas
+    namespace: boilerplate
   cache:
     type: caffeine
   redis:

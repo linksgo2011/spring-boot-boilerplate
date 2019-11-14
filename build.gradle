@@ -46,6 +46,8 @@ tasks.withType(JavaCompile) { options.encoding = 'utf-8' }
 
 repositories {
     mavenLocal()
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
     mavenCentral()
 }
 
@@ -66,7 +68,6 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-mail'
 
     // MQ
-    compile 'org.springframework.boot:spring-boot-starter-activemq'
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
     compile 'org.springframework.session:spring-session-data-redis'
 
@@ -88,6 +89,7 @@ dependencies {
 
     // test
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    
     runtime('org.springframework.boot:spring-boot-devtools')
 }
 
