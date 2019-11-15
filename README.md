@@ -25,11 +25,13 @@ Launch a spring boot based project quickly with basic features
 ## TODO
 
 - Auth
-- Cach
+- Cache
 - Example for pagination
 - swagger 
 - API testingg
 - ELK
 - QueryDsl
 - Sheld Lock
+- webflux
+
 
