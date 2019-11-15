@@ -1,4 +1,6 @@
-node{
+pipeline {
+    agent any
+
     stage('Build') {
         checkout scm
         withEnv([
