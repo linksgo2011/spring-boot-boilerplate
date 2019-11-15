@@ -1,4 +1,4 @@
-package cn.printf.springbootboilerplate.model;
+package cn.printf.springbootboilerplate.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

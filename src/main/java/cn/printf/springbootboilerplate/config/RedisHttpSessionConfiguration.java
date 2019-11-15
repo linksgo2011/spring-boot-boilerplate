@@ -5,7 +5,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 
 @ConditionalOnProperty(name = "spring.session.store-type", havingValue = "redis")
 @EnableRedisHttpSession(redisNamespace = "${spring.session.redis.namespace}")
-//with redisNamespace, we can reuse redis instance for multiple environments
 public class RedisHttpSessionConfiguration {
 
 }

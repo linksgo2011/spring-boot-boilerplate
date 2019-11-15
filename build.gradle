@@ -12,13 +12,11 @@ buildscript {
 
 plugins {
     id 'org.springframework.boot' version '2.1.3.RELEASE'
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.7"
     id "io.spring.dependency-management" version "1.0.3.RELEASE"
 }
 
 apply plugin: 'idea'
 apply plugin: 'java'
-apply plugin: 'groovy'
 
 buildDir = './out'
 
@@ -60,29 +58,17 @@ dependencies {
 
     // web
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-webflux'
     compile 'org.springframework.boot:spring-boot-starter-hateoas'
-    compile 'org.springframework.boot:spring-boot-starter-security'
 
-    // mail
-    compile 'org.springframework.boot:spring-boot-starter-mail'
-
-    // MQ
+    // Session
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
     compile 'org.springframework.session:spring-session-data-redis'
 
     // database
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'mysql:mysql-connector-java'
-    compile "mysql:mysql-connector-java:6.0.6"
-    compile "com.querydsl:querydsl-jpa:4.0.9"
-    compile 'org.flywaydb:flyway-core'
 
-    // cache
-    compile("org.springframework.boot:spring-boot-starter-cache")
-    compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.6.2'
-    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
-    compile group: 'org.hibernate', name: 'hibernate-ehcache', version: hibernateVersion
+    compile 'org.flywaydb:flyway-core'
 
     // model mapper
     compile group: 'org.modelmapper', name: 'modelmapper', version: '1.1.1'
@@ -91,42 +77,6 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
     runtime('org.springframework.boot:spring-boot-devtools')
-}
-
-idea {
-    project {
-
-        jdkName = '1.8'
-        languageLevel = '1.8'
-
-        ipr.withXml { xmlFile ->
-            // setup Git root
-            xmlFile.asNode().component.find { it.@name == 'VcsDirectoryMappings' }.replaceNode {
-                component(name: 'VcsDirectoryMappings') {
-                    mapping(directory: "", vcs: "Git")
-                    mapping(directory: "\$PROJECT_DIR\$", vcs: 'Git')
-                }
-            }
-
-            // setup annotationProcessing for lombok
-            xmlFile.asNode().component.find {
-                it.@name == 'CompilerConfiguration'
-            }.annotationProcessing.replaceNode {
-                annotationProcessing() {
-                    profile(default: "true", name: "Default", enabled: 'true')
-                }
-            }
-        }
-    }
-
-    module {
-        scopes.COMPILE.plus += [configurations.compileOnly]
-        sourceDirs += file('src/querydsl/java')
-    }
-}
-
-querydsl {
-    jpa = true
 }
 
 def buildStage() {

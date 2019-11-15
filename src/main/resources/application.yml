@@ -4,8 +4,6 @@ spring:
   jackson:
     dateFormat: yyyy-MM-dd'T'HH:mm:ssZZ
     timeZone: UTC
-  hazelcast:
-    config: classpath:hazelcast.xml
   datasource:
     testOnBorrow: true
     validationQuery: SELECT 1
@@ -13,23 +11,11 @@ spring:
     show_sql: true
     format_sql: true
     hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        cache:
-          use_second_level_cache: true
-          use_query_cache: true
-          region:
-            factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
-      javax:
-        persistence:
-          sharedCache:
-            mode: ENABLE_SELECTIVE
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   session:
     store-type: redis
     namespace: boilerplate
-  cache:
-    type: caffeine
   redis:
     host: localhost
     port: 6379

@@ -1,8 +1,9 @@
 package cn.printf.springbootboilerplate.service;
 
-import cn.printf.springbootboilerplate.model.User;
-import cn.printf.springbootboilerplate.persistence.UserDao;
+import cn.printf.springbootboilerplate.domain.User;
+import cn.printf.springbootboilerplate.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService {
 
-    private UserDao userDao;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<User> getUserList() {
-        return userDao.findAll();
+        return userRepository.findAll();
     }
 }
