@@ -27,7 +27,7 @@ public class DepartmentController {
 
     @GetMapping
     public PageResource getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
-        return departmentService.getDepartments(departmentCriteria,pageable);
+        return departmentService.getDepartments(departmentCriteria, pageable);
     }
 
     @PostMapping
