@@ -1,4 +1,4 @@
-package cn.printf.springbootboilerplate.service;
+package cn.printf.springbootboilerplate.application;
 
 import cn.printf.springbootboilerplate.domain.User;
 import cn.printf.springbootboilerplate.repository.UserRepository;

@@ -58,7 +58,6 @@ dependencies {
 
     // web
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-hateoas'
 
     // Session
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
