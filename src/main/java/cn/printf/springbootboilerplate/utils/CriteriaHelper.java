@@ -18,12 +18,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author Zheng Jie
- * @date 2019-6-4 14:59:48
- */
 @Slf4j
-public class QueryHelp {
+public class CriteriaHelper {
 
     @SuppressWarnings("unchecked")
     public static <R, Q> Predicate getPredicate(Root<R> root, Q query, CriteriaBuilder cb) {

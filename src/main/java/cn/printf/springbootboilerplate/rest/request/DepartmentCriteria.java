@@ -17,9 +17,9 @@ public class DepartmentCriteria {
     @Query
     private Long pid;
 
-    @Query(type = Query.Type.GREATER_THAN,propName = "createTime")
+    @Query(type = Query.Type.GREATER_THAN, propName = "createTime")
     private Timestamp startTime;
 
-    @Query(type = Query.Type.LESS_THAN,propName = "createTime")
+    @Query(type = Query.Type.LESS_THAN, propName = "createTime")
     private Timestamp endTime;
 }

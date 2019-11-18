@@ -6,7 +6,8 @@ import cn.printf.springbootboilerplate.repository.DepartmentRepository;
 import cn.printf.springbootboilerplate.rest.request.DepartmentAddRequest;
 import cn.printf.springbootboilerplate.rest.request.DepartmentCriteria;
 import cn.printf.springbootboilerplate.rest.resource.DepartmentResource;
-import cn.printf.springbootboilerplate.utils.QueryHelp;
+import cn.printf.springbootboilerplate.rest.resource.PageResource;
+import cn.printf.springbootboilerplate.utils.CriteriaHelper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,9 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public Page<DepartmentResource> getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
-        return departmentRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, departmentCriteria, criteriaBuilder), pageable).map(DepartmentResource::of);
+    public PageResource getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
+        Page<DepartmentResource> page =  departmentRepository.findAll((root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, departmentCriteria, criteriaBuilder), pageable).map(DepartmentResource::of);
+        return PageResource.toResource(page);
     }
 
     public DepartmentResource addDepartment(DepartmentAddRequest departmentAddRequest) {

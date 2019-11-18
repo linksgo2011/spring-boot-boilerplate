@@ -4,8 +4,8 @@ import cn.printf.springbootboilerplate.application.DepartmentService;
 import cn.printf.springbootboilerplate.rest.request.DepartmentAddRequest;
 import cn.printf.springbootboilerplate.rest.request.DepartmentCriteria;
 import cn.printf.springbootboilerplate.rest.resource.DepartmentResource;
+import cn.printf.springbootboilerplate.rest.resource.PageResource;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping
-    public Page<DepartmentResource> getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
+    public PageResource getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
         return departmentService.getDepartments(departmentCriteria,pageable);
     }
 
