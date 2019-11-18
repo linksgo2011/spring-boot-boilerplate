@@ -2,8 +2,6 @@ package cn.printf.springbootboilerplate.exception;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.function.Supplier;
-
 import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.PRECONDITION_FAILED;
 

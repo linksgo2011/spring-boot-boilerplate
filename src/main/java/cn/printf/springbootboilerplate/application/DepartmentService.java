@@ -7,10 +7,9 @@ import cn.printf.springbootboilerplate.rest.request.DepartmentAddRequest;
 import cn.printf.springbootboilerplate.rest.resource.DepartmentResource;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -19,8 +18,8 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public Collection<DepartmentResource> getDepartments() {
-        return departmentRepository.findAll().stream().map(DepartmentResource::of).collect(Collectors.toList());
+    public Page<DepartmentResource> getDepartments(Pageable pageable) {
+        return departmentRepository.findAll(pageable).map(DepartmentResource::of);
     }
 
     public DepartmentResource addDepartment(DepartmentAddRequest departmentAddRequest) {

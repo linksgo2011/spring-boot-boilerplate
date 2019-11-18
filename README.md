@@ -5,16 +5,11 @@ Launch a spring boot based project quickly with basic features
 ## features
 
 - actuator
-- aop
-- cache
 - JPA
-- HATEOAS
 - mail
-- webflux
 - flyway
-- session
+- redis session
 - lombok
-- JMS
 
 ## run 
 
@@ -24,14 +19,17 @@ Launch a spring boot based project quickly with basic features
 
 ## TODO
 
+- Bean validation
+- Page
+- Search with criteria 
 - Auth
 - Cache
+- Swagger 
 - Example for pagination
 - swagger 
-- API testingg
+- API Testing 
 - ELK
 - QueryDsl
-- Sheld Lock
+- Redis Lock
 - webflux
-
-
+- HATEOAS

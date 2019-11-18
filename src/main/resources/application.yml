@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   profiles:
     active: dev
@@ -20,8 +23,6 @@ spring:
     host: localhost
     port: 6379
 
-server:
-  port: 8080
 
 management:
   health:
