@@ -2,6 +2,7 @@ package cn.printf.springbootboilerplate.rest;
 
 import cn.printf.springbootboilerplate.application.DepartmentService;
 import cn.printf.springbootboilerplate.rest.request.DepartmentAddRequest;
+import cn.printf.springbootboilerplate.rest.request.DepartmentCriteria;
 import cn.printf.springbootboilerplate.rest.resource.DepartmentResource;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,8 +26,8 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping
-    public Page<DepartmentResource> getDepartments(Pageable pageable) {
-        return departmentService.getDepartments(pageable);
+    public Page<DepartmentResource> getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
+        return departmentService.getDepartments(departmentCriteria,pageable);
     }
 
     @PostMapping
@@ -35,7 +36,10 @@ public class DepartmentController {
     }
 
     @PutMapping("{departmentId}")
-    public DepartmentResource updateDepartment(@PathVariable long departmentId, @RequestBody @Valid DepartmentAddRequest departmentAddRequest) {
+    public DepartmentResource updateDepartment(
+            @PathVariable long departmentId,
+            @RequestBody @Valid DepartmentAddRequest departmentAddRequest
+    ) {
         return departmentService.updateDepartment(departmentId, departmentAddRequest);
     }
 

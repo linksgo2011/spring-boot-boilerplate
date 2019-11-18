@@ -4,7 +4,9 @@ import cn.printf.springbootboilerplate.domain.Department;
 import cn.printf.springbootboilerplate.exception.NoSuchObjectException;
 import cn.printf.springbootboilerplate.repository.DepartmentRepository;
 import cn.printf.springbootboilerplate.rest.request.DepartmentAddRequest;
+import cn.printf.springbootboilerplate.rest.request.DepartmentCriteria;
 import cn.printf.springbootboilerplate.rest.resource.DepartmentResource;
+import cn.printf.springbootboilerplate.utils.QueryHelp;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,8 +20,8 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public Page<DepartmentResource> getDepartments(Pageable pageable) {
-        return departmentRepository.findAll(pageable).map(DepartmentResource::of);
+    public Page<DepartmentResource> getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
+        return departmentRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, departmentCriteria, criteriaBuilder), pageable).map(DepartmentResource::of);
     }
 
     public DepartmentResource addDepartment(DepartmentAddRequest departmentAddRequest) {
