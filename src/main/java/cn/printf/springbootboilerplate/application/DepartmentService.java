@@ -5,6 +5,7 @@ import cn.printf.springbootboilerplate.exception.NoSuchObjectException;
 import cn.printf.springbootboilerplate.repository.DepartmentRepository;
 import cn.printf.springbootboilerplate.rest.request.DepartmentAddRequest;
 import cn.printf.springbootboilerplate.rest.request.DepartmentCriteria;
+import cn.printf.springbootboilerplate.rest.request.DepartmentEditRequest;
 import cn.printf.springbootboilerplate.rest.resource.DepartmentResource;
 import cn.printf.springbootboilerplate.rest.resource.PageResource;
 import cn.printf.springbootboilerplate.utils.CriteriaHelper;
@@ -37,7 +38,7 @@ public class DepartmentService {
         return DepartmentResource.of(savedDepartment);
     }
 
-    public DepartmentResource updateDepartment(Long departmentId, DepartmentAddRequest departmentAddRequest) {
+    public DepartmentResource updateDepartment(Long departmentId, DepartmentEditRequest departmentAddRequest) {
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new NoSuchObjectException("department not found"));
 

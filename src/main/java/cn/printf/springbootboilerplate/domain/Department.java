@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -34,7 +33,6 @@ public class Department implements Serializable {
     @Column(name = "name",nullable = false)
     private String name;
 
-    @NotNull
     private Boolean enabled;
 
     @Column(name = "pid",nullable = false)

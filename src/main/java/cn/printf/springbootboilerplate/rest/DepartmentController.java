@@ -3,6 +3,7 @@ package cn.printf.springbootboilerplate.rest;
 import cn.printf.springbootboilerplate.application.DepartmentService;
 import cn.printf.springbootboilerplate.rest.request.DepartmentAddRequest;
 import cn.printf.springbootboilerplate.rest.request.DepartmentCriteria;
+import cn.printf.springbootboilerplate.rest.request.DepartmentEditRequest;
 import cn.printf.springbootboilerplate.rest.resource.DepartmentResource;
 import cn.printf.springbootboilerplate.rest.resource.PageResource;
 import lombok.AllArgsConstructor;
@@ -38,7 +39,7 @@ public class DepartmentController {
     @PutMapping("{departmentId}")
     public DepartmentResource updateDepartment(
             @PathVariable long departmentId,
-            @RequestBody @Valid DepartmentAddRequest departmentAddRequest
+            @RequestBody @Valid DepartmentEditRequest departmentAddRequest
     ) {
         return departmentService.updateDepartment(departmentId, departmentAddRequest);
     }
