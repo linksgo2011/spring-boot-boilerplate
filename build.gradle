@@ -72,6 +72,9 @@ dependencies {
     // model mapper
     compile group: 'org.modelmapper', name: 'modelmapper', version: '1.1.1'
 
+    // security
+    compile 'commons-codec:commons-codec:1.13'
+
     // test
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
