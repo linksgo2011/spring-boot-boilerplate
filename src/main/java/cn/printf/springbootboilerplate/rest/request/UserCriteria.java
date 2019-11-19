@@ -6,10 +6,10 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class DepartmentCriteria {
+public class UserCriteria {
 
     @Query(type = Query.Type.INNER_LIKE)
-    private String name;
+    private String username;
 
     @Query
     private Boolean enabled;

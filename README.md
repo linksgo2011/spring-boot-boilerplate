@@ -15,25 +15,25 @@ Launch a spring boot based project quickly with basic features
 - flyway
 - redis session
 - lombok
-- Page
+- Pagination
+- Bean validation
 
 ## Focus on 
 
-- Search with criteria 
+- Table Relationship 
 
 ## TODO
-- Bean validation
-- mail
+- Search with criteria 
+- fileupload
 - Auth
 - Cache
 - Swagger 
-- Example for pagination
-- swagger 
 - API Testing 
+
+## Maybe
+
 - Redis Lock
 - webflux
 - HATEOAS
 - ELK
 - QueryDsl
-
-

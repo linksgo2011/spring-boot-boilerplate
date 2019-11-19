@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
-import java.sql.Timestamp;
-
 @Getter
 @NoArgsConstructor
 @Data
@@ -19,8 +17,6 @@ public class DepartmentResource {
     private Boolean enabled;
 
     private Long pid;
-
-    private Timestamp createTime;
 
     public static DepartmentResource of(Department department) {
         ModelMapper modelMapper = new ModelMapper();
