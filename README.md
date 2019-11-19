@@ -17,15 +17,18 @@ Launch a spring boot based project quickly with basic features
 - lombok
 - Pagination
 - Bean validation
+- Password Hash
+- Search with criteria 
 
 ## Focus on 
 
-- Table Relationship 
+- Authentication
 
 ## TODO
-- Search with criteria 
+
+- Authorization
+- Table Relationship 
 - fileupload
-- Auth
 - Cache
 - Swagger 
 - API Testing 
