@@ -3,15 +3,15 @@ services:
   mysql:
     image: mysql:5.7.20
     volumes:
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --lower_case_table_names=1
     ports:
-      - "3309:3306"
+    - "3309:3306"
     environment:
-      - TZ=Asia/Shanghai
-      - MYSQL_ROOT_PASSWORD=123456
+    - TZ=Asia/Shanghai
+    - MYSQL_ROOT_PASSWORD=123456
 
   redis:
     image: redis:2.8.23-32bit
     ports:
-      - "6379:6379"
+    - "6379:6379"

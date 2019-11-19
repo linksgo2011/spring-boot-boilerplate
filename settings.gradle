@@ -1,1 +1,4 @@
 rootProject.name = 'spring-boot-boilerplate'
+include 'domain'
+include 'bootstrap'
+
