@@ -1,4 +1,4 @@
-package springbootboilerplate.rest;
+package springbootboilerplate.modules.admin.rest;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.UserService;
-import springbootboilerplate.rest.request.UserAddRequest;
-import springbootboilerplate.rest.request.UserCriteria;
-import springbootboilerplate.rest.request.UserEditRequest;
-import springbootboilerplate.rest.resource.PageResource;
-import springbootboilerplate.rest.resource.UserResource;
+import springbootboilerplate.modules.admin.application.UserService;
+import springbootboilerplate.modules.admin.rest.request.UserAddRequest;
+import springbootboilerplate.modules.admin.rest.request.UserCriteria;
+import springbootboilerplate.modules.admin.rest.request.UserEditRequest;
+import springbootboilerplate.modules.admin.rest.resource.PageResource;
+import springbootboilerplate.modules.admin.rest.resource.UserResource;
 
 import javax.validation.Valid;
 import java.net.URI;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/admin/users")
 public class UserController {
 
     private UserService userService;

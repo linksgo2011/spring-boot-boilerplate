@@ -1,4 +1,4 @@
-package springbootboilerplate.repository;
+package springbootboilerplate.modules.admin.repository;
 
 import cn.printf.springbootboilerplate.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

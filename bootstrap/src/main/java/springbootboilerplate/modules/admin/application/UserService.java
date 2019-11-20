@@ -1,4 +1,4 @@
-package springbootboilerplate.application;
+package springbootboilerplate.modules.admin.application;
 
 import cn.printf.springbootboilerplate.domain.User;
 import lombok.AllArgsConstructor;
@@ -9,12 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import springbootboilerplate.exception.NoSuchObjectException;
 import springbootboilerplate.exception.ObjectExistException;
-import springbootboilerplate.repository.UserRepository;
-import springbootboilerplate.rest.request.UserAddRequest;
-import springbootboilerplate.rest.request.UserCriteria;
-import springbootboilerplate.rest.request.UserEditRequest;
-import springbootboilerplate.rest.resource.PageResource;
-import springbootboilerplate.rest.resource.UserResource;
+import springbootboilerplate.modules.admin.repository.UserRepository;
+import springbootboilerplate.modules.admin.rest.request.UserAddRequest;
+import springbootboilerplate.modules.admin.rest.request.UserCriteria;
+import springbootboilerplate.modules.admin.rest.request.UserEditRequest;
+import springbootboilerplate.modules.admin.rest.resource.PageResource;
+import springbootboilerplate.modules.admin.rest.resource.UserResource;
 import springbootboilerplate.utils.CriteriaHelper;
 
 import static springbootboilerplate.config.Constants.DEFAULT_PASSWORD;

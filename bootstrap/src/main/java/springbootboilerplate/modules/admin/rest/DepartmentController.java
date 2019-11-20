@@ -1,4 +1,4 @@
-package springbootboilerplate.rest;
+package springbootboilerplate.modules.admin.rest;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.DepartmentService;
-import springbootboilerplate.rest.request.DepartmentAddRequest;
-import springbootboilerplate.rest.request.DepartmentCriteria;
-import springbootboilerplate.rest.request.DepartmentEditRequest;
-import springbootboilerplate.rest.resource.DepartmentResource;
-import springbootboilerplate.rest.resource.PageResource;
+import springbootboilerplate.modules.admin.application.DepartmentService;
+import springbootboilerplate.modules.admin.rest.request.DepartmentAddRequest;
+import springbootboilerplate.modules.admin.rest.request.DepartmentCriteria;
+import springbootboilerplate.modules.admin.rest.request.DepartmentEditRequest;
+import springbootboilerplate.modules.admin.rest.resource.DepartmentResource;
+import springbootboilerplate.modules.admin.rest.resource.PageResource;
 
 import javax.validation.Valid;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/departments")
+@RequestMapping("/api/admin/departments")
 public class DepartmentController {
 
     private DepartmentService departmentService;

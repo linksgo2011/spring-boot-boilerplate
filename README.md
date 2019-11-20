@@ -28,6 +28,7 @@ Launch a spring boot based project quickly with basic features
 
 - Authorization
 - Table Relationship 
+- UUID
 - fileupload
 - Cache
 - Swagger 
@@ -36,7 +37,9 @@ Launch a spring boot based project quickly with basic features
 ## Maybe
 
 - Redis Lock
+- JWT
+- FastDFS
 - webflux
 - HATEOAS
-- ELK
+- EFK
 - QueryDsl

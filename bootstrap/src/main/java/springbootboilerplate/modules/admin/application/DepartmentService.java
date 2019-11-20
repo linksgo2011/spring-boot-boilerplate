@@ -1,4 +1,4 @@
-package springbootboilerplate.application;
+package springbootboilerplate.modules.admin.application;
 
 import cn.printf.springbootboilerplate.domain.Department;
 import lombok.AllArgsConstructor;
@@ -7,12 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import springbootboilerplate.exception.NoSuchObjectException;
-import springbootboilerplate.repository.DepartmentRepository;
-import springbootboilerplate.rest.request.DepartmentAddRequest;
-import springbootboilerplate.rest.request.DepartmentCriteria;
-import springbootboilerplate.rest.request.DepartmentEditRequest;
-import springbootboilerplate.rest.resource.DepartmentResource;
-import springbootboilerplate.rest.resource.PageResource;
+import springbootboilerplate.modules.admin.repository.DepartmentRepository;
+import springbootboilerplate.modules.admin.rest.request.DepartmentAddRequest;
+import springbootboilerplate.modules.admin.rest.request.DepartmentCriteria;
+import springbootboilerplate.modules.admin.rest.request.DepartmentEditRequest;
+import springbootboilerplate.modules.admin.rest.resource.DepartmentResource;
+import springbootboilerplate.modules.admin.rest.resource.PageResource;
 import springbootboilerplate.utils.CriteriaHelper;
 
 @Service

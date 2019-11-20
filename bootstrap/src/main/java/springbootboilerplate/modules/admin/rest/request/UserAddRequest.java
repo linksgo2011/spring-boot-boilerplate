@@ -1,4 +1,4 @@
-package springbootboilerplate.rest.request;
+package springbootboilerplate.modules.admin.rest.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

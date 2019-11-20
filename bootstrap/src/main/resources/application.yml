@@ -34,6 +34,6 @@ management:
       enabled: true
 
 logging:
-  file: ./spring-boot-boilerplate.log
+  file: /home/workspace/spring-boot-boilerplate.log
   level:
     com.exmertec: warn
