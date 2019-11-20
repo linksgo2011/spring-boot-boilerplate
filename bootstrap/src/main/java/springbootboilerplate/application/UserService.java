@@ -27,7 +27,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public PageResource getUsers(UserCriteria userCriteria, Pageable pageable) {
-        Page<UserResource> page = userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable).map(UserResource::of);
+        Page<UserResource> page = userRepository.findAll(
+                (root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable
+        ).map(UserResource::of);
         return PageResource.toResource(page);
     }
 

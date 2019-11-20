@@ -23,7 +23,9 @@ public class DepartmentService {
     private DepartmentRepository departmentRepository;
 
     public PageResource getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
-        Page<DepartmentResource> page =  departmentRepository.findAll((root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, departmentCriteria, criteriaBuilder), pageable).map(DepartmentResource::of);
+        Page<DepartmentResource> page = departmentRepository.findAll(
+                (root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, departmentCriteria, criteriaBuilder), pageable
+        ).map(DepartmentResource::of);
         return PageResource.toResource(page);
     }
 

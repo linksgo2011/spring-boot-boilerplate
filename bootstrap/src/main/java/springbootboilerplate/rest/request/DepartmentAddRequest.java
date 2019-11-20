@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Data
 public class DepartmentAddRequest {
-    @Size(min=2, max=36)
+    @Size(min = 2, max = 36)
     private String name;
 
     @NotNull
