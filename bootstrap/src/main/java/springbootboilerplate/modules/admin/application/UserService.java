@@ -2,10 +2,10 @@ package springbootboilerplate.modules.admin.application;
 
 import cn.printf.springbootboilerplate.domain.User;
 import lombok.AllArgsConstructor;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import springbootboilerplate.exception.NoSuchObjectException;
 import springbootboilerplate.exception.ObjectExistException;
@@ -26,6 +26,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public PageResource getUsers(UserCriteria userCriteria, Pageable pageable) {
         Page<UserResource> page = userRepository.findAll(
                 (root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable
@@ -42,7 +45,7 @@ public class UserService {
             throw new ObjectExistException(User.class, "email", userAddRequest.getUsername());
         }
 
-        String hashedPassword = DigestUtils.sha1Hex(DEFAULT_PASSWORD);
+        String hashedPassword = encoder.encode(DEFAULT_PASSWORD);
         User user = User
                 .builder()
                 .email(userAddRequest.getEmail())

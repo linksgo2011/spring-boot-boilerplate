@@ -1,15 +1,14 @@
 package springbootboilerplate.modules.auth.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import springbootboilerplate.modules.auth.AwareAuthenticationSuccessHandler;
+import springbootboilerplate.modules.auth.CustomUserDetailService;
 import springbootboilerplate.modules.auth.RestAuthenticationEntryPoint;
 
 @Configuration
@@ -39,15 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable();
     }
 
+
+    @Autowired
+    CustomUserDetailService customUserDetailService;
+
     @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("admin")
-                        .password("123456")
-                        .roles("admin")
-                        .build();
-        return new InMemoryUserDetailsManager(user);
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
