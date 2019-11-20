@@ -12,7 +12,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +24,6 @@ import java.sql.Timestamp;
 @Setter
 @Accessors(chain = true)
 @Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
