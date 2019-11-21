@@ -5,15 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.session.data.redis.config.ConfigureRedisAction;
 
 @Configuration
 public class RedisConfiguration {
-
-    @Bean
-    public static ConfigureRedisAction configureRedisAction() {
-        return ConfigureRedisAction.NO_OP;
-    }
 
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory rcf) {

@@ -27,11 +27,12 @@ Launch a spring boot based project quickly with basic features
 ## TODO
 
 - Authorization
+- Druid
 - Table Relationship 
 - UUID
 - fileupload
 - Cache
-- Swagger 
+- API Documentation 
 - API Testing 
 
 ## Maybe

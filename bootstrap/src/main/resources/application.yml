@@ -19,9 +19,6 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-  session:
-    store-type: redis
-    namespace: boilerplate
   redis:
     host: localhost
     port: 6379
