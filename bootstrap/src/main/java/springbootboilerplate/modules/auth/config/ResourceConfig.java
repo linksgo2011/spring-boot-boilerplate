@@ -13,14 +13,15 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         super.configure(resources);
-        resources.resourceId("admin");
+        resources.resourceId("default");
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .requestMatchers()
-                .antMatchers("/api/admin/**")
+                .authorizeRequests()
+                .antMatchers("/api/admin/**").hasRole("admin")
+                .antMatchers("/api/frontend/**").authenticated()
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated();

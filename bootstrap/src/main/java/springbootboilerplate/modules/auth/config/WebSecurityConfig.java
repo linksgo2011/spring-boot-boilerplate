@@ -30,8 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/frontend/**").permitAll()
-                .antMatchers("/api/admin/**").permitAll()
+                .anyRequest()
+                .permitAll()
                 .and()
                 .csrf()
                 .disable();

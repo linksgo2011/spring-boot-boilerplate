@@ -28,8 +28,7 @@ public class AuthorizeConfig extends AuthorizationServerConfigurerAdapter {
     private CustomUserDetailService userDetailsService;
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-            throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.authenticationManager(authenticationManager)
                 .tokenStore(tokenStore)
                 .userDetailsService(userDetailsService);
@@ -53,7 +52,7 @@ public class AuthorizeConfig extends AuthorizationServerConfigurerAdapter {
                 .withClient("default_client")
                 .secret(passwordEncoder.encode("default_secret"))
                 .authorizedGrantTypes("password")
-                .resourceIds("admin")
+                .resourceIds("default")
                 .scopes("user_info")
                 .autoApprove(true);
     }
