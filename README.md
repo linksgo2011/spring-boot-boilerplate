@@ -27,6 +27,7 @@ Launch a spring boot based project quickly with basic features
 ## TODO
 
 - Authorization
+- DB R/W Splitting 
 - Druid
 - Table Relationship 
 - UUID
@@ -34,13 +35,14 @@ Launch a spring boot based project quickly with basic features
 - Cache
 - API Documentation 
 - API Testing 
+- Database sharding
 
 ## Maybe
 
 - Redis Lock
+- webflux
 - JWT
 - FastDFS
-- webflux
 - HATEOAS
 - EFK
 - QueryDsl
