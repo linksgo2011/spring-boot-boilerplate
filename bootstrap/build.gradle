@@ -1,0 +1,49 @@
+apply plugin: 'org.springframework.boot'
+
+if (buildStage()) {
+    apply plugin: "com.gorylenko.gradle-git-properties"
+//    apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
+//    apply from: "${rootProject.projectDir}/gradle/findbugs.gradle"
+    apply from: "${rootProject.projectDir}/gradle/git-hooks.gradle"
+    apply from: "${rootProject.projectDir}/gradle/build-version.gradle"
+    apply from: "${rootProject.projectDir}/gradle/boot-info.gradle"
+    apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
+}
+
+buildDir = './out'
+
+dependencies {
+    implementation project(':domain')
+    // web
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+
+    // Session
+    compile 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // database
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    compile 'org.flywaydb:flyway-core'
+
+    // model mapper
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '1.1.1'
+
+    // security
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE'
+    compile 'commons-codec:commons-codec:1.13'
+
+    // test
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    runtime('org.springframework.boot:spring-boot-devtools')
+}
+
+def buildStage() {
+    String isBuildStage = System.getProperty("buildStage")
+    print "property isBuildStage=${isBuildStage}"
+    def b = isBuildStage == null || Boolean.valueOf(isBuildStage)
+    print "final isBuildStage=${b}"
+    return b
+}

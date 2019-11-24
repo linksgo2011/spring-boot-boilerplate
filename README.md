@@ -18,7 +18,6 @@ Launch a spring boot based project quickly with basic features
 - Pagination
 - Bean validation
 - Password Hash
-- Search with criteria 
 
 ## Focus on 
 
@@ -27,27 +26,30 @@ Launch a spring boot based project quickly with basic features
 ## TODO
 
 - Authorization
-- CRUD
-- Deployment automation
-- Zerocode concurrence Testing by code
+- Change tomcat to Undertow
+- Search with criteria  
+- Cache
+- CRUD for User and Role
 - DB R/W Splitting 
 - Druid
 - Table Relationship 
 - UUID
-- fileupload
-- Cache
+- fileupload to cloud
+- webflux
+- Zerocode concurrence Testing by code
 - API Testing
 - Optimistic Lock by @Version 
 - Database sharding
-- API Documentation 
+- API Documentation
+- Deployment automation
+- Jib
 
 ## Maybe
 
 - Redis Lock
-- webflux
 - API limitation
 - JWT
-- FastDFS
-- HATEOAS
 - EFK
 - QueryDsl
+- HATEOAS
+- K8S
