@@ -31,6 +31,13 @@ subprojects {
 
     tasks.withType(JavaCompile) { options.encoding = 'utf-8' }
 
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+    
     repositories {
         mavenLocal()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }

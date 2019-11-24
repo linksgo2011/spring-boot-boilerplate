@@ -5,7 +5,7 @@ Launch a spring boot based project quickly with basic features
 ## run 
 
 - find environment in `env` folder
-- start mysql & redis `docker-compose --file docker/docker-compose.yml up`
+- start mysql & redis `docker-compose --file docker-compose.yml up`
 - run spring boot application `./gradlew bootRun`
 
 ## feature
@@ -21,15 +21,15 @@ Launch a spring boot based project quickly with basic features
 
 ## Focus on 
 
-- Authentication
+- Authorization
 
 ## TODO
 
-- Authorization
+- CRUD for User and Role
+- Authentication
 - Change tomcat to Undertow
 - Search with criteria  
 - Cache
-- CRUD for User and Role
 - DB R/W Splitting 
 - Druid
 - Table Relationship 

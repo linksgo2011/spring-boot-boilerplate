@@ -1,5 +1,6 @@
 package springbootboilerplate.modules.auth;
 
+import cn.printf.springbootboilerplate.domain.Role;
 import cn.printf.springbootboilerplate.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,8 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -30,10 +32,13 @@ public class AuthUser implements UserDetails {
 
     private String password;
 
+    private Set<Role> roles;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO
-        return Arrays.asList(new SimpleGrantedAuthority("admin"));
+        return this.roles.stream().map(
+                (role)->new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet()
+        );
     }
 
     @Override
@@ -66,7 +71,7 @@ public class AuthUser implements UserDetails {
         return enabled;
     }
 
-    public static AuthUser of(User user) {
+    public static AuthUser from(User user) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, AuthUser.class);
     }
