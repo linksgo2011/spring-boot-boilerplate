@@ -27,20 +27,25 @@ Launch a spring boot based project quickly with basic features
 ## TODO
 
 - Authorization
+- CRUD
+- Deployment automation
+- Zerocode concurrence Testing by code
 - DB R/W Splitting 
 - Druid
 - Table Relationship 
 - UUID
 - fileupload
 - Cache
-- API Documentation 
-- API Testing 
+- API Testing
+- Optimistic Lock by @Version 
 - Database sharding
+- API Documentation 
 
 ## Maybe
 
 - Redis Lock
 - webflux
+- API limitation
 - JWT
 - FastDFS
 - HATEOAS
