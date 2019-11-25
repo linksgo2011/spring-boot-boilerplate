@@ -13,11 +13,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @EqualsAndHashCode(of = "username")
 @ToString(of = "username")
@@ -45,6 +50,13 @@ public class User {
     private Boolean enabled;
 
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+    )
+    private Set<Role> roles;
 
     @CreationTimestamp
     private Timestamp createAt;

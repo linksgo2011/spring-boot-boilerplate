@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import springbootboilerplate.exception.NoSuchObjectException;
-import springbootboilerplate.modules.admin.repository.DepartmentRepository;
+import springbootboilerplate.repository.DepartmentRepository;
 import springbootboilerplate.modules.admin.rest.request.DepartmentAddRequest;
 import springbootboilerplate.modules.admin.rest.request.DepartmentCriteria;
 import springbootboilerplate.modules.admin.rest.request.DepartmentEditRequest;

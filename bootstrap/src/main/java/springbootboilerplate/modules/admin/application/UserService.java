@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import springbootboilerplate.exception.NoSuchObjectException;
 import springbootboilerplate.exception.ObjectExistException;
-import springbootboilerplate.modules.admin.repository.UserRepository;
+import springbootboilerplate.repository.UserRepository;
 import springbootboilerplate.modules.admin.rest.request.UserAddRequest;
 import springbootboilerplate.modules.admin.rest.request.UserCriteria;
 import springbootboilerplate.modules.admin.rest.request.UserEditRequest;

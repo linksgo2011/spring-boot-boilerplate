@@ -12,7 +12,7 @@ spring:
   datasource:
     testOnBorrow: true
     validationQuery: SELECT 1
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show_sql: true
     format_sql: true
@@ -22,8 +22,6 @@ spring:
   redis:
     host: localhost
     port: 6379
-  flyway:
-    locations: "classpath:./migration"
 
 management:
   health:
