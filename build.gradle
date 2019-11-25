@@ -37,11 +37,9 @@ subprojects {
             downloadSources = true
         }
     }
-    
+
     repositories {
         mavenLocal()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
         mavenCentral()
     }
 

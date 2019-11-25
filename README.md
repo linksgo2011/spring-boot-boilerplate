@@ -25,6 +25,7 @@ Launch a spring boot based project quickly with basic features
 
 ## TODO
 
+- Error redefine for controller advice
 - ObjectMapper best practise
 - Cache
 - Authorization
@@ -52,5 +53,8 @@ Launch a spring boot based project quickly with basic features
 - JWT
 - EFK
 - QueryDsl
-- HATEOAS
-- K8S
+
+## 参考
+
+- https://auauz.net/dashboard
+- http://doc.ruoyi.vip/ruoyi-vue/

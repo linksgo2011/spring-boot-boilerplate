@@ -20,7 +20,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api/admin/**").hasRole("admin")
+                .antMatchers("/api/admin/**").hasAuthority("admin")
                 .antMatchers("/api/frontend/**").authenticated()
                 .antMatchers("/api/auth/who-am-i").authenticated()
                 .and()

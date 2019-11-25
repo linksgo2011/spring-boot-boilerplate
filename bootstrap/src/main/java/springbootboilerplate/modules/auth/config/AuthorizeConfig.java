@@ -54,6 +54,7 @@ public class AuthorizeConfig extends AuthorizationServerConfigurerAdapter {
                 .authorizedGrantTypes("password")
                 .resourceIds("default")
                 .scopes("user_info")
+                .authorities("admin","user")
                 .autoApprove(true);
     }
 }
