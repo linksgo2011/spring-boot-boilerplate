@@ -11,9 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -24,10 +24,6 @@ public class AuthUser implements UserDetails {
 
     private String username;
 
-    private String email;
-
-    private String phone;
-
     private Boolean enabled;
 
     private String password;
@@ -36,11 +32,9 @@ public class AuthUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("user"));
-
-//        return this.roles.stream().map(
-//                (role)->new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet()
-//        );
+        return this.roles.stream().map(
+                (role)->new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet()
+        );
     }
 
     @Override

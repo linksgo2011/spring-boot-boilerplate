@@ -25,6 +25,7 @@ Launch a spring boot based project quickly with basic features
 
 ## TODO
 
+- ObjectMapper best practise
 - Cache
 - Authorization
 - Docker https://wycode.cn/2019-09-20-docker_spring.html

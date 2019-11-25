@@ -1,5 +1,6 @@
 package springbootboilerplate.modules.admin.application;
 
+import cn.printf.springbootboilerplate.domain.Department;
 import cn.printf.springbootboilerplate.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import springbootboilerplate.exception.NoSuchObjectException;
 import springbootboilerplate.exception.ObjectExistException;
 import springbootboilerplate.repository.UserRepository;
@@ -36,6 +38,7 @@ public class UserService {
         return PageResource.toResource(page);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public UserResource addUser(UserAddRequest userAddRequest) {
         if (userRepository.findByUsername(userAddRequest.getUsername()).isPresent()) {
             throw new ObjectExistException(User.class, "username", userAddRequest.getUsername());
@@ -53,6 +56,7 @@ public class UserService {
                 .phone(userAddRequest.getPhone())
                 .enabled(userAddRequest.getEnabled())
                 .password(hashedPassword)
+                .department(Department.builder().id(userAddRequest.getDepartmentId()).build())
                 .build();
 
         User savedUser = userRepository.saveAndFlush(user);

@@ -19,4 +19,7 @@ public class UserAddRequest {
 
     @NotNull
     private Boolean enabled;
+
+    @NotNull
+    private Long departmentId;
 }
