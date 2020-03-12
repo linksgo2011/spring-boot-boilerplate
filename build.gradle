@@ -47,4 +47,22 @@ subprojects {
         compileOnly "org.projectlombok:lombok"
         testCompileOnly "org.projectlombok:lombok"
     }
+
+    if (buildStage()) {
+        apply plugin: "com.gorylenko.gradle-git-properties"
+        apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
+        apply from: "${rootProject.projectDir}/gradle/findbugs.gradle"
+        apply from: "${rootProject.projectDir}/gradle/git-hooks.gradle"
+        apply from: "${rootProject.projectDir}/gradle/build-version.gradle"
+        apply from: "${rootProject.projectDir}/gradle/boot-info.gradle"
+        apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
+    }
+}
+
+def buildStage() {
+    String isBuildStage = System.getProperty("buildStage")
+    print "property isBuildStage=${isBuildStage}"
+    def b = isBuildStage == null || Boolean.valueOf(isBuildStage)
+    print "final isBuildStage=${b}"
+    return b
 }
