@@ -21,6 +21,15 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
 
+    if (buildStage()) {
+        apply plugin: "com.gorylenko.gradle-git-properties"
+        apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
+        apply from: "${rootProject.projectDir}/gradle/findbugs.gradle"
+        apply from: "${rootProject.projectDir}/gradle/git-hooks.gradle"
+        apply from: "${rootProject.projectDir}/gradle/build-version.gradle"
+        apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
+    }
+
     buildDir = './out'
 
     group = 'cn.printf.springbootboilerplate'
@@ -44,18 +53,12 @@ subprojects {
     }
 
     dependencies {
+        // tool
+        compile 'com.google.guava:guava:28.2-jre'
+
         compileOnly "org.projectlombok:lombok"
         testCompileOnly "org.projectlombok:lombok"
     }
-}
-
-if (buildStage()) {
-    apply plugin: "com.gorylenko.gradle-git-properties"
-    apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
-    apply from: "${rootProject.projectDir}/gradle/findbugs.gradle"
-    apply from: "${rootProject.projectDir}/gradle/git-hooks.gradle"
-    apply from: "${rootProject.projectDir}/gradle/build-version.gradle"
-    apply from: "${rootProject.projectDir}/gradle/maven-publish.gradle"
 }
 
 def buildStage() {

@@ -8,7 +8,7 @@ import springbootboilerplate.modules.admin.application.UserService;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/frontend/home")
+@RequestMapping("/v1/api/frontend/home")
 public class HomeController {
 
     private UserService userService;

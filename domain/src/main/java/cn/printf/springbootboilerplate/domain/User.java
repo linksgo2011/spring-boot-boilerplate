@@ -1,5 +1,6 @@
 package cn.printf.springbootboilerplate.domain;
 
+import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -57,7 +58,7 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    private Set<Role> roles;
+    private Set<Role> roles = Sets.newHashSet();
 
     @ManyToOne
     @JoinColumn(name = "department_id")
