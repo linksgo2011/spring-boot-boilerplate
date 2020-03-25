@@ -13,6 +13,7 @@ import springbootboilerplate.modules.auth.APIBaseTest;
 import springbootboilerplate.modules.auth.config.JWTTokenStore;
 import springbootboilerplate.repository.UserRepository;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -63,6 +64,6 @@ public class TokenControllerTest extends APIBaseTest {
         this.mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.roles", is(user.getRoles())));
+                .andExpect(jsonPath("$.roles", hasItems()));
     }
 }
