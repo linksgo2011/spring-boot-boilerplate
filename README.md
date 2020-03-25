@@ -18,14 +18,14 @@
 - Spring boot actuator 用于健康检查
 - JPA 基本配置
 - flyway 数据库迁移工具
-- redis session 分布式会话
 - lombok 简化 getter/setter 样板代码
 - Pagination 分页
 - Bean validation 基本数据验证
 - Password Hash
 - git hook 用于提交代码前自我检查
-
-## Focus on 
-
 - checkstyle
 - findbugs
+
+## Focus on 
+- 自定义注解
+

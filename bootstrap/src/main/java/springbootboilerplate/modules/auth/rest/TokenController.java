@@ -3,11 +3,11 @@ package springbootboilerplate.modules.auth.rest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,7 +58,6 @@ public class TokenController {
      * @return
      */
     @GetMapping(value = "/info")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public TokenInfoResponse getUserInfo() {
         Authentication authentication = SecurityContextHolder
                 .getContext()
@@ -66,13 +65,13 @@ public class TokenController {
 
         return Optional.ofNullable(authentication).map(
                 element -> {
-                    String username = (String) element.getPrincipal();
+                    User userDetails = (User) element.getPrincipal();
 
                     List<String> roles = element
                             .getAuthorities()
                             .stream()
                             .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-                    return TokenInfoResponse.of(username, roles);
+                    return TokenInfoResponse.of(userDetails.getUsername(), roles);
                 }).orElse(null);
     }
 }

@@ -13,6 +13,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "test")
@@ -26,10 +28,10 @@ public abstract class APIBaseTest {
 
     @Before
     public void baseBefore() {
-        this.mockMvc =
-                MockMvcBuilders
-                        .webAppContextSetup(this.wac)
-                        .alwaysDo(MockMvcResultHandlers.print())
-                        .build();
+        this.mockMvc = MockMvcBuilders
+                .webAppContextSetup(this.wac)
+                .alwaysDo(MockMvcResultHandlers.print())
+                .apply(springSecurity())
+                .build();
     }
 }

@@ -6,13 +6,14 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import springbootboilerplate.modules.auth.APIBaseTest;
-import springbootboilerplate.modules.auth.AuthUser;
 import springbootboilerplate.modules.auth.config.JWTTokenStore;
 import springbootboilerplate.repository.UserRepository;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,18 +51,18 @@ public class TokenControllerTest extends APIBaseTest {
     }
 
     @Test
+    @WithMockUser(username = "zhangsan", roles = {})
     public void get_user_info() throws Exception {
         User user = userRepository.save(prepareAdminUser());
-        String token = jwtTokenStore.generateToken(AuthUser.from(user));
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get("/v1/token/info")
-                .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
         this.mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.value", isA(String.class)));
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.roles", is(user.getRoles())));
     }
 }

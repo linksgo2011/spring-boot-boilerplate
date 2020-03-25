@@ -11,9 +11,6 @@ import springbootboilerplate.repository.UserRepository;
 
 /**
  * UserDetails 存权限系统的用户来源，只需要在获取凭证时读取用户信息，然后存储到 redis、jwt 中
- * 1. 数据库
- * 2. LDAP
- * 3. CAS
  */
 @Primary
 @Component
@@ -26,6 +23,6 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not find by username"));
-        return AuthUser.from(user);
+        return CustomUserDetails.from(user);
     }
 }
