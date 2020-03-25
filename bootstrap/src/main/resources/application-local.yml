@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3309/spring-boot-boilerplate?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/spring-boot-boilerplate?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: 123456
   redis:
@@ -11,4 +11,4 @@ spring:
     add-properties: false
 
 logging:
-  level: info
+  level: debug

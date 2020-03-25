@@ -1,5 +1,3 @@
-SET MODE MYSQL;
-
 CREATE TABLE `department`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(255) NOT NULL,

@@ -6,14 +6,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JWTTokenStore {
@@ -28,10 +32,16 @@ public class JWTTokenStore {
 
     AbstractAuthenticationToken buildAuthentication(String token) {
         Claims claims = getClaimsFromToken(token);
+        List<String> roles = claims.get(AUTHORITIES_CLAIM_KEY, List.class);
+
+        List<SimpleGrantedAuthority> grantedAuthorities =  roles.stream().map(
+                SimpleGrantedAuthority::new
+        ).collect(Collectors.toList());
+
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 claims.getSubject(),
                 token,
-                claims.get(AUTHORITIES_CLAIM_KEY, Collection.class)
+                grantedAuthorities
         );
         return authToken;
     }
@@ -44,7 +54,7 @@ public class JWTTokenStore {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            claims = null;
+            throw new BadCredentialsException("invalid token");
         }
         return claims;
     }
@@ -62,7 +72,11 @@ public class JWTTokenStore {
         Claims claims = new DefaultClaims();
         claims.setSubject(userDetails.getUsername());
         claims.setExpiration(buildExpiration());
-        claims.put(AUTHORITIES_CLAIM_KEY, userDetails.getAuthorities());
+        claims.put(AUTHORITIES_CLAIM_KEY,
+                userDetails.getAuthorities().stream().map(
+                        GrantedAuthority::getAuthority
+                ).collect(Collectors.toList())
+        );
         return claims;
     }
 

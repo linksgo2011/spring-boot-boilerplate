@@ -27,6 +27,8 @@ dependencies {
 
     compile 'commons-codec:commons-codec:1.13'
 
+    compile 'org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE'
+
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation 'org.springframework.security:spring-security-test'

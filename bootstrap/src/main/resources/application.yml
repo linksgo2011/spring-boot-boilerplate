@@ -31,7 +31,7 @@ management:
 logging:
   file: /home/workspace/spring-boot-boilerplate.log
   level:
-    com.exmertec: warn
+    root: info
 
 jwt:
   expiration: 30

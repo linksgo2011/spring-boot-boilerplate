@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static springbootboilerplate.modules.auth.fixture.UserFixture.prepareAdminUser;
 
-public class AuthenticationControllerTest extends APIBaseTest {
+public class TokenControllerTest extends APIBaseTest {
 
     @Autowired
     private UserRepository userRepository;

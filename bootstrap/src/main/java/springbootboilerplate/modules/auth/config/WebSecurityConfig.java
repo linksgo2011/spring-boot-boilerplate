@@ -1,8 +1,10 @@
 package springbootboilerplate.modules.auth.config;
 
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,8 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import springbootboilerplate.modules.auth.CustomUserDetailService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -21,11 +27,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailService identityService;
 
-    private final EntryPointUnauthorizedHandler unauthorizedHandler;
+    @Autowired
+    private JWTTokenStore jwtTokenStore;
 
-    public WebSecurityConfig(EntryPointUnauthorizedHandler unauthorizedHandler,
-                             CustomUserDetailService identityService) {
-        this.unauthorizedHandler = unauthorizedHandler;
+    public WebSecurityConfig(CustomUserDetailService identityService) {
         this.identityService = identityService;
     }
 
@@ -46,10 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationFilter authenticationTokenFilterBean() throws Exception {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
-        authenticationFilter.setAuthenticationManager(authenticationManagerBean());
-        return authenticationFilter;
+    SimpleTokenAuthenticationFilter authenticationTokenFilterBean() throws Exception {
+        // 只有 header 中带有认证信息的才使用这个过滤器
+        SimpleTokenAuthenticationFilter simpleTokenAuthenticationFilter = new SimpleTokenAuthenticationFilter();
+        simpleTokenAuthenticationFilter.setAuthenticationEntryPoint(
+                new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
+        );
+        simpleTokenAuthenticationFilter.setTokenStore(jwtTokenStore);
+        return simpleTokenAuthenticationFilter;
     }
 
     @Override
@@ -58,13 +67,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 关闭 csrf（跨站脚本攻击） 功能，构建 Restful API 无法避免
                 .csrf().disable()
                 // 配置一个鉴权失败后返回的错误码
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 // 配置 session 管理器，关闭 session 管理，也不会创建 SecurityContext
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 // 开始配置权限设置
                 .and().authorizeRequests()
                 // 登录相关无需认证
-                .antMatchers("/v1/api/token/*").permitAll()
+                .antMatchers("/v1/token").permitAll()
                 // 剩下的所有请求都需要认证
                 .anyRequest().authenticated();
 
@@ -75,7 +84,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 将自定义的过滤器置于 UsernamePassword 过滤器之前
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
+        // 关闭无用的过滤器
         http.formLogin().disable();
+        http.logout().disable();
     }
 
     /**
@@ -84,5 +95,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    private static final class TokenRequestMatcher implements RequestMatcher {
+        private static final String TOKEN_HEADER = "Authorization";
+
+        @Override
+        public boolean matches(HttpServletRequest request) {
+            String tokenString = request.getHeader(TOKEN_HEADER);
+            return !Strings.isNullOrEmpty(tokenString);
+        }
     }
 }
