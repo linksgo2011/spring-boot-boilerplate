@@ -1,6 +1,5 @@
 package springbootboilerplate.modules.auth;
 
-import cn.printf.springbootboilerplate.domain.Role;
 import cn.printf.springbootboilerplate.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
@@ -29,11 +28,11 @@ public class CustomUserDetails implements UserDetails {
 
     private String password;
 
-    private Set<String> roles;
+    private List<String> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
@@ -71,13 +70,13 @@ public class CustomUserDetails implements UserDetails {
         modelMapper.addMappings(new PropertyMap<User, CustomUserDetails>() {
             @Override
             protected void configure() {
-                map().setRoles(source.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
+                map().setRoles(source.getRolesAsString());
             }
         });
         return modelMapper.map(user, CustomUserDetails.class);
     }
 
-    public static CustomUserDetails from(String username, Set<String> roles) {
+    public static CustomUserDetails from(String username, List<String> roles) {
         CustomUserDetails customUserDetails = new CustomUserDetails();
         customUserDetails.setUsername(username);
         customUserDetails.setRoles(roles);

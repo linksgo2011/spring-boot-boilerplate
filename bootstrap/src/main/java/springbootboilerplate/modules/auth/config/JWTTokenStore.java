@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,11 +33,11 @@ public class JWTTokenStore {
 
     AbstractAuthenticationToken buildAuthentication(String token) {
         Claims claims = getClaimsFromToken(token);
-        Set<String> roles = claims.get(AUTHORITIES_CLAIM_KEY, Set.class);
+        List<String> roles = claims.get(AUTHORITIES_CLAIM_KEY, List.class);
 
-        Set<SimpleGrantedAuthority> grantedAuthorities = roles.stream().map(
+        List<SimpleGrantedAuthority> grantedAuthorities = roles.stream().map(
                 SimpleGrantedAuthority::new
-        ).collect(Collectors.toSet());
+        ).collect(Collectors.toList());
 
         User user = new User(claims.getSubject(), "", grantedAuthorities);
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

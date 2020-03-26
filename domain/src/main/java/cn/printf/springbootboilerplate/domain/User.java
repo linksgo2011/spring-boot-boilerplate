@@ -1,6 +1,5 @@
 package cn.printf.springbootboilerplate.domain;
 
-import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -24,7 +23,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @EqualsAndHashCode(of = "username")
 @ToString(of = "username")
@@ -58,7 +59,7 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    private Set<Role> roles = Sets.newHashSet();
+    private List<Role> roles = new ArrayList();
 
     @ManyToOne
     @JoinColumn(name = "department_id")
@@ -69,4 +70,8 @@ public class User {
 
     @UpdateTimestamp
     private Timestamp updateAt;
+
+    public List<String> getRolesAsString() {
+        return getRoles().stream().map(Role::getName).collect(Collectors.toList());
+    }
 }
