@@ -36,5 +36,3 @@ logging:
 jwt:
   expiration: 30
   secret: "please change me"
-
-
