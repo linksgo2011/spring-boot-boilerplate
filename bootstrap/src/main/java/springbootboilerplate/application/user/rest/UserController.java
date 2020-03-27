@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.user.application.UserService;
+import springbootboilerplate.application.user.UserService;
 import springbootboilerplate.application.user.rest.request.UserAddRequest;
 import springbootboilerplate.application.user.rest.request.UserCriteria;
 import springbootboilerplate.application.user.rest.request.UserEditRequest;

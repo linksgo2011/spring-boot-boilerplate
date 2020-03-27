@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.auth.AuthCommandHandler;
+import springbootboilerplate.application.auth.AuthApplicationService;
 import springbootboilerplate.application.auth.command.FetchTokenCommand;
 import springbootboilerplate.application.auth.result.TokenInfoResult;
 import springbootboilerplate.application.auth.result.TokenResult;
@@ -33,12 +33,12 @@ public class TokenController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    AuthCommandHandler authCommandHandler;
+    AuthApplicationService authApplicationService;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public TokenResult token(@Valid @RequestBody FetchTokenCommand fetchTokenCommand) {
-        return TokenResult.of(authCommandHandler.auth(fetchTokenCommand));
+        return TokenResult.of(authApplicationService.auth(fetchTokenCommand));
     }
 
     /**

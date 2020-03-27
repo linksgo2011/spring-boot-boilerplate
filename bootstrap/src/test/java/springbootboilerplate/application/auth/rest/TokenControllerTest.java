@@ -10,7 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import springbootboilerplate.application.auth.APIBaseTest;
-import springbootboilerplate.application.auth.config.JWTTokenStore;
+import springbootboilerplate.application.auth.JWTTokenStore;
 import cn.printf.springbootboilerplate.domain.user.UserRepository;
 
 import static org.hamcrest.CoreMatchers.hasItems;

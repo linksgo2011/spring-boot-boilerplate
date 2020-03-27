@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.user.application.DepartmentService;
+import springbootboilerplate.application.user.DepartmentService;
 import springbootboilerplate.application.user.rest.request.DepartmentAddRequest;
 import springbootboilerplate.application.user.rest.request.DepartmentCriteria;
 import springbootboilerplate.application.user.rest.request.DepartmentEditRequest;

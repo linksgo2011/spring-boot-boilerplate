@@ -1,4 +1,4 @@
-package springbootboilerplate.application.user.application;
+package springbootboilerplate.application.user;
 
 import cn.printf.springbootboilerplate.domain.department.Department;
 import cn.printf.springbootboilerplate.domain.user.User;
