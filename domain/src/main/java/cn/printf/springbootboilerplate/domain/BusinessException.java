@@ -9,7 +9,7 @@ import lombok.Getter;
 public class BusinessException extends RuntimeException {
     private String code;
 
-    public BusinessException(String message, Throwable cause, String code) {
+    public BusinessException(String code, String message, Throwable cause) {
         super(message, cause);
         this.code = code;
     }

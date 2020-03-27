@@ -1,4 +1,4 @@
-package springbootboilerplate.application.user.rest.request;
+package springbootboilerplate.application.admin.rest.command;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @Data
-public class UserAddRequest {
+public class UserAddCommand {
     @NotNull
     private String username;
 

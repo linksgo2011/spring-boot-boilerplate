@@ -1,4 +1,4 @@
-package springbootboilerplate.application.user.rest;
+package springbootboilerplate.application.admin.rest;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.user.DepartmentService;
-import springbootboilerplate.application.user.rest.request.DepartmentAddRequest;
-import springbootboilerplate.application.user.rest.request.DepartmentCriteria;
-import springbootboilerplate.application.user.rest.request.DepartmentEditRequest;
-import springbootboilerplate.application.user.rest.resource.DepartmentResource;
-import springbootboilerplate.application.user.rest.resource.PageResource;
+import springbootboilerplate.application.admin.DepartmentAdminAppService;
+import springbootboilerplate.application.admin.rest.command.DepartmentAddCommand;
+import springbootboilerplate.application.admin.rest.query.DepartmentCriteria;
+import springbootboilerplate.application.admin.rest.command.DepartmentEditCommand;
+import springbootboilerplate.application.admin.rest.result.DepartmentResource;
+import springbootboilerplate.application.admin.rest.result.PageResource;
 
 import javax.validation.Valid;
 
@@ -24,28 +24,28 @@ import javax.validation.Valid;
 @RequestMapping("/api/admin/departments")
 public class DepartmentController {
 
-    private DepartmentService departmentService;
+    private DepartmentAdminAppService departmentAdminAppService;
 
     @GetMapping
     public PageResource getDepartments(DepartmentCriteria departmentCriteria, Pageable pageable) {
-        return departmentService.getDepartments(departmentCriteria, pageable);
+        return departmentAdminAppService.getDepartments(departmentCriteria, pageable);
     }
 
     @PostMapping
-    public DepartmentResource addDepartment(@RequestBody @Valid DepartmentAddRequest departmentAddRequest) {
-        return departmentService.addDepartment(departmentAddRequest);
+    public DepartmentResource addDepartment(@RequestBody @Valid DepartmentAddCommand departmentAddCommand) {
+        return departmentAdminAppService.addDepartment(departmentAddCommand);
     }
 
     @PutMapping("{departmentId}")
     public DepartmentResource updateDepartment(
             @PathVariable long departmentId,
-            @RequestBody @Valid DepartmentEditRequest departmentAddRequest
+            @RequestBody @Valid DepartmentEditCommand departmentAddRequest
     ) {
-        return departmentService.updateDepartment(departmentId, departmentAddRequest);
+        return departmentAdminAppService.updateDepartment(departmentId, departmentAddRequest);
     }
 
     @DeleteMapping("{departmentId}")
     public void deleteDepartment(@PathVariable long departmentId) {
-        departmentService.deleteDepartment(departmentId);
+        departmentAdminAppService.deleteDepartment(departmentId);
     }
 }

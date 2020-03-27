@@ -1,4 +1,4 @@
-package springbootboilerplate.application.user.rest;
+package springbootboilerplate.application.admin.rest;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.user.UserService;
-import springbootboilerplate.application.user.rest.request.UserAddRequest;
-import springbootboilerplate.application.user.rest.request.UserCriteria;
-import springbootboilerplate.application.user.rest.request.UserEditRequest;
-import springbootboilerplate.application.user.rest.resource.PageResource;
-import springbootboilerplate.application.user.rest.resource.UserResource;
+import springbootboilerplate.application.admin.UserAdminAppService;
+import springbootboilerplate.application.admin.rest.command.UserAddCommand;
+import springbootboilerplate.application.admin.rest.query.UserCriteria;
+import springbootboilerplate.application.admin.rest.command.UserEditCommand;
+import springbootboilerplate.application.admin.rest.result.PageResource;
+import springbootboilerplate.application.admin.rest.result.UserResource;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -26,16 +26,16 @@ import java.net.URI;
 @RequestMapping("/api/admin/users")
 public class UserController {
 
-    private UserService userService;
+    private UserAdminAppService userAdminAppService;
 
     @GetMapping
     public PageResource getUsers(UserCriteria userCriteria, Pageable pageable) {
-        return userService.getUsers(userCriteria, pageable);
+        return userAdminAppService.getUsers(userCriteria, pageable);
     }
 
     @PostMapping
-    public ResponseEntity<UserResource> addUser(@RequestBody @Valid UserAddRequest userAddRequest) {
-        UserResource userResource = userService.addUser(userAddRequest);
+    public ResponseEntity<UserResource> addUser(@RequestBody @Valid UserAddCommand userAddCommand) {
+        UserResource userResource = userAdminAppService.addUser(userAddCommand);
 
         return ResponseEntity.created(
                 URI.create("/api/users/" + userResource.getId())
@@ -45,13 +45,13 @@ public class UserController {
     @PutMapping("{userId}")
     public UserResource updateUser(
             @PathVariable long userId,
-            @RequestBody @Valid UserEditRequest userAddRequest
+            @RequestBody @Valid UserEditCommand userAddRequest
     ) {
-        return userService.updateUser(userId, userAddRequest);
+        return userAdminAppService.updateUser(userId, userAddRequest);
     }
 
     @DeleteMapping("{userId}")
     public void deleteUser(@PathVariable long userId) {
-        userService.deleteUser(userId);
+        userAdminAppService.deleteUser(userId);
     }
 }

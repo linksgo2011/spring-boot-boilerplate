@@ -1,4 +1,4 @@
-package springbootboilerplate.application.user.rest.resource;
+package springbootboilerplate.application.admin.rest.result;
 
 import lombok.Builder;
 import lombok.Getter;

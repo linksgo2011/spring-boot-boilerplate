@@ -1,7 +1,9 @@
-package springbootboilerplate.application.user;
+package springbootboilerplate.application.admin;
 
 import cn.printf.springbootboilerplate.domain.department.Department;
 import cn.printf.springbootboilerplate.domain.user.User;
+import cn.printf.springbootboilerplate.domain.user.UserExistException;
+import cn.printf.springbootboilerplate.domain.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,21 +11,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springbootboilerplate.application.exception.NoSuchObjectException;
-import springbootboilerplate.application.exception.ObjectExistException;
-import cn.printf.springbootboilerplate.domain.user.UserRepository;
-import springbootboilerplate.application.user.rest.request.UserAddRequest;
-import springbootboilerplate.application.user.rest.request.UserCriteria;
-import springbootboilerplate.application.user.rest.request.UserEditRequest;
-import springbootboilerplate.application.user.rest.resource.PageResource;
-import springbootboilerplate.application.user.rest.resource.UserResource;
+import springbootboilerplate.application.admin.rest.command.UserAddCommand;
+import springbootboilerplate.application.admin.rest.command.UserEditCommand;
+import springbootboilerplate.application.admin.rest.query.UserCriteria;
+import springbootboilerplate.application.admin.rest.result.PageResource;
+import springbootboilerplate.application.admin.rest.result.UserResource;
 import springbootboilerplate.utils.CriteriaHelper;
 
 import static springbootboilerplate.config.Constants.DEFAULT_PASSWORD;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserAdminAppService {
 
     @Autowired
     private UserRepository userRepository;
@@ -39,33 +38,33 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public UserResource addUser(UserAddRequest userAddRequest) {
-        if (userRepository.findByUsername(userAddRequest.getUsername()).isPresent()) {
-            throw new ObjectExistException(User.class, "username", userAddRequest.getUsername());
+    public UserResource addUser(UserAddCommand userAddCommand) {
+        if (userRepository.findByUsername(userAddCommand.getUsername()).isPresent()) {
+            throw new UserExistException();
         }
 
-        if (userRepository.findByEmail(userAddRequest.getEmail()).isPresent()) {
-            throw new ObjectExistException(User.class, "email", userAddRequest.getUsername());
+        if (userRepository.findByEmail(userAddCommand.getEmail()).isPresent()) {
+            throw new UserExistException();
         }
 
         String hashedPassword = encoder.encode(DEFAULT_PASSWORD);
         User user = User
                 .builder()
-                .email(userAddRequest.getEmail())
-                .username(userAddRequest.getEmail())
-                .phone(userAddRequest.getPhone())
-                .enabled(userAddRequest.getEnabled())
+                .email(userAddCommand.getEmail())
+                .username(userAddCommand.getEmail())
+                .phone(userAddCommand.getPhone())
+                .enabled(userAddCommand.getEnabled())
                 .password(hashedPassword)
-                .department(Department.builder().id(userAddRequest.getDepartmentId()).build())
+                .department(Department.builder().id(userAddCommand.getDepartmentId()).build())
                 .build();
 
         User savedUser = userRepository.saveAndFlush(user);
         return UserResource.of(savedUser);
     }
 
-    public UserResource updateUser(Long userId, UserEditRequest userAddRequest) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchObjectException("user not found"));
+    @Transactional(rollbackFor = Exception.class)
+    public UserResource updateUser(Long userId, UserEditCommand userAddRequest) {
+        User user = userRepository.getOne(userId);
 
         user.setEnabled(userAddRequest.getEnabled());
         user.setEmail(userAddRequest.getEmail());

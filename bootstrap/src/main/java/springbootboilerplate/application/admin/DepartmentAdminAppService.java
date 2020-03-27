@@ -1,4 +1,4 @@
-package springbootboilerplate.application.user;
+package springbootboilerplate.application.admin;
 
 import cn.printf.springbootboilerplate.domain.department.Department;
 import lombok.AllArgsConstructor;
@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import springbootboilerplate.application.exception.NoSuchObjectException;
+import cn.printf.springbootboilerplate.domain.NoSuchObjectException;
 import cn.printf.springbootboilerplate.domain.department.DepartmentRepository;
-import springbootboilerplate.application.user.rest.request.DepartmentAddRequest;
-import springbootboilerplate.application.user.rest.request.DepartmentCriteria;
-import springbootboilerplate.application.user.rest.request.DepartmentEditRequest;
-import springbootboilerplate.application.user.rest.resource.DepartmentResource;
-import springbootboilerplate.application.user.rest.resource.PageResource;
+import springbootboilerplate.application.admin.rest.command.DepartmentAddCommand;
+import springbootboilerplate.application.admin.rest.query.DepartmentCriteria;
+import springbootboilerplate.application.admin.rest.command.DepartmentEditCommand;
+import springbootboilerplate.application.admin.rest.result.DepartmentResource;
+import springbootboilerplate.application.admin.rest.result.PageResource;
 import springbootboilerplate.utils.CriteriaHelper;
 
 @Service
 @AllArgsConstructor
-public class DepartmentService {
+public class DepartmentAdminAppService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
@@ -29,18 +29,18 @@ public class DepartmentService {
         return PageResource.toResource(page);
     }
 
-    public DepartmentResource addDepartment(DepartmentAddRequest departmentAddRequest) {
+    public DepartmentResource addDepartment(DepartmentAddCommand departmentAddCommand) {
         Department department = Department
                 .builder()
-                .name(departmentAddRequest.getName())
-                .pid(departmentAddRequest.getPid())
-                .enabled(departmentAddRequest.getEnabled())
+                .name(departmentAddCommand.getName())
+                .pid(departmentAddCommand.getPid())
+                .enabled(departmentAddCommand.getEnabled())
                 .build();
         Department savedDepartment = departmentRepository.saveAndFlush(department);
         return DepartmentResource.of(savedDepartment);
     }
 
-    public DepartmentResource updateDepartment(Long departmentId, DepartmentEditRequest departmentAddRequest) {
+    public DepartmentResource updateDepartment(Long departmentId, DepartmentEditCommand departmentAddRequest) {
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new NoSuchObjectException("department not found"));
 

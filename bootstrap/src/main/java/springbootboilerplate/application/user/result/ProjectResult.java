@@ -1,4 +1,4 @@
-package springbootboilerplate.application.user.rest.resource;
+package springbootboilerplate.application.user.result;
 
 import cn.printf.springbootboilerplate.domain.user.User;
 import lombok.Data;
@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 @Getter
 @NoArgsConstructor
 @Data
-public class UserResource {
+public class ProjectResult {
     private Long id;
 
     private String username;
@@ -20,8 +20,8 @@ public class UserResource {
 
     private Boolean enabled;
 
-    public static UserResource of(User user) {
+    public static ProjectResult of(User user) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(user, UserResource.class);
+        return modelMapper.map(user, ProjectResult.class);
     }
 }
