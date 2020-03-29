@@ -11,11 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springbootboilerplate.application.admin.rest.command.UserAddCommand;
-import springbootboilerplate.application.admin.rest.command.UserEditCommand;
-import springbootboilerplate.application.admin.rest.query.UserCriteria;
-import springbootboilerplate.application.admin.rest.result.PageResource;
-import springbootboilerplate.application.admin.rest.result.UserResource;
+import springbootboilerplate.application.admin.command.UserAddCommand;
+import springbootboilerplate.application.admin.command.UserEditCommand;
+import springbootboilerplate.application.admin.query.UserCriteria;
+import springbootboilerplate.application.admin.result.PageResource;
+import springbootboilerplate.application.admin.result.UserResource;
 import springbootboilerplate.utils.CriteriaHelper;
 
 import static springbootboilerplate.config.Constants.DEFAULT_PASSWORD;
@@ -30,10 +30,8 @@ public class UserAdminAppService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    public PageResource getUsers(UserCriteria userCriteria, Pageable pageable) {
-        Page<UserResource> page = userRepository.findAll(
-                (root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable
-        ).map(UserResource::of);
+    public PageResource<UserResource> getUsers(UserCriteria userCriteria, Pageable pageable) {
+        Page<UserResource> page = userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable).map(UserResource::of);
         return PageResource.toResource(page);
     }
 

@@ -1,4 +1,4 @@
-package springbootboilerplate.application.admin.rest.command;
+package springbootboilerplate.application.admin.command;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @Data
-public class DepartmentAddCommand {
+public class DepartmentEditCommand {
     @Size(min = 2, max = 36)
     private String name;
 

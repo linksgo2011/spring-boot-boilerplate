@@ -1,4 +1,4 @@
-package springbootboilerplate.application.admin.rest.result;
+package springbootboilerplate.application.admin.result;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,11 +10,14 @@ import java.util.List;
 @Getter
 public class PageResource<T> {
     private long totalElements;
+    private long totalPages;
     private List<T> content;
 
     public static PageResource toResource(Page page) {
         return PageResource.builder()
                 .content(page.getContent())
-                .totalElements(page.getTotalElements()).build();
+                .totalElements(page.getTotalElements())
+                .totalPages(page.getTotalPages())
+                .build();
     }
 }

@@ -1,4 +1,4 @@
-package springbootboilerplate.application.admin.rest.result;
+package springbootboilerplate.application.admin.result;
 
 import cn.printf.springbootboilerplate.domain.department.Department;
 import lombok.Data;

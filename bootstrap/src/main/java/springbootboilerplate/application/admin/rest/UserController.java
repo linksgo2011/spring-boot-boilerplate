@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springbootboilerplate.application.admin.UserAdminAppService;
-import springbootboilerplate.application.admin.rest.command.UserAddCommand;
-import springbootboilerplate.application.admin.rest.query.UserCriteria;
-import springbootboilerplate.application.admin.rest.command.UserEditCommand;
-import springbootboilerplate.application.admin.rest.result.PageResource;
-import springbootboilerplate.application.admin.rest.result.UserResource;
+import springbootboilerplate.application.admin.command.UserAddCommand;
+import springbootboilerplate.application.admin.query.UserCriteria;
+import springbootboilerplate.application.admin.command.UserEditCommand;
+import springbootboilerplate.application.admin.result.PageResource;
+import springbootboilerplate.application.admin.result.UserResource;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -28,8 +28,11 @@ public class UserController {
 
     private UserAdminAppService userAdminAppService;
 
+    /**
+     * 根据搜索条件,获取用户列表
+     */
     @GetMapping
-    public PageResource getUsers(UserCriteria userCriteria, Pageable pageable) {
+    public PageResource<UserResource> getUsers(UserCriteria userCriteria, Pageable pageable) {
         return userAdminAppService.getUsers(userCriteria, pageable);
     }
 

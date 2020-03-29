@@ -1,4 +1,4 @@
-package springbootboilerplate.application.admin.rest.command;
+package springbootboilerplate.application.admin.command;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

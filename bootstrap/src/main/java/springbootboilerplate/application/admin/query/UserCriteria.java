@@ -1,4 +1,4 @@
-package springbootboilerplate.application.admin.rest.query;
+package springbootboilerplate.application.admin.query;
 
 import lombok.Data;
 import springbootboilerplate.annotation.Query;
@@ -6,10 +6,10 @@ import springbootboilerplate.annotation.Query;
 import java.sql.Timestamp;
 
 @Data
-public class DepartmentCriteria {
+public class UserCriteria {
 
     @Query(type = Query.Type.INNER_LIKE)
-    private String name;
+    private String username;
 
     @Query
     private Boolean enabled;

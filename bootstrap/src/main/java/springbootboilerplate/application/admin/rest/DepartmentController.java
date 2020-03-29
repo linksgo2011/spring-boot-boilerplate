@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springbootboilerplate.application.admin.DepartmentAdminAppService;
-import springbootboilerplate.application.admin.rest.command.DepartmentAddCommand;
-import springbootboilerplate.application.admin.rest.query.DepartmentCriteria;
-import springbootboilerplate.application.admin.rest.command.DepartmentEditCommand;
-import springbootboilerplate.application.admin.rest.result.DepartmentResource;
-import springbootboilerplate.application.admin.rest.result.PageResource;
+import springbootboilerplate.application.admin.command.DepartmentAddCommand;
+import springbootboilerplate.application.admin.query.DepartmentCriteria;
+import springbootboilerplate.application.admin.command.DepartmentEditCommand;
+import springbootboilerplate.application.admin.result.DepartmentResource;
+import springbootboilerplate.application.admin.result.PageResource;
 
 import javax.validation.Valid;
 
