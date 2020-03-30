@@ -1,6 +1,6 @@
 package springbootboilerplate.application.auth.fixture;
 
-import cn.printf.springbootboilerplate.domain.user.User;
+import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import lombok.Builder;
 
 import java.sql.Timestamp;

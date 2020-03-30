@@ -1,6 +1,6 @@
 package springbootboilerplate.application.auth;
 
-import cn.printf.springbootboilerplate.domain.user.User;
+import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

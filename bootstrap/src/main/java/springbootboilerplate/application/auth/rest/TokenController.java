@@ -4,25 +4,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.auth.AuthApplicationService;
-import springbootboilerplate.application.auth.command.FetchTokenCommand;
-import springbootboilerplate.application.auth.result.TokenInfoResult;
-import springbootboilerplate.application.auth.result.TokenResult;
+import springbootboilerplate.application.auth.JWTTokenStore;
+import springbootboilerplate.application.auth.usecase.FetchTokenCase;
+import springbootboilerplate.application.auth.usecase.QueryTokenInfoCase;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -33,12 +30,24 @@ public class TokenController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    AuthApplicationService authApplicationService;
+    JWTTokenStore tokenStore;
+
+    @Autowired
+    UserDetailsService userDetails;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public TokenResult token(@Valid @RequestBody FetchTokenCommand fetchTokenCommand) {
-        return TokenResult.of(authApplicationService.auth(fetchTokenCommand));
+    public FetchTokenCase.Response token(@Valid @RequestBody FetchTokenCase.Request fetchTokenCaseRequest) {
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+                fetchTokenCaseRequest.getUsername(),
+                fetchTokenCaseRequest.getPassword()
+        );
+
+        // 使用 provider 的 authenticationManager好处是支持多种数据来源，例如 DB、LDAP，并且会验证用户的 disable 等属性
+        Authentication authentication = authenticationManager.authenticate(authRequest);
+        return FetchTokenCase.toResponseFrom(
+                tokenStore.generateToken((UserDetails) authentication.getPrincipal())
+        );
     }
 
     /**
@@ -47,20 +56,10 @@ public class TokenController {
      * @return
      */
     @GetMapping(value = "/info")
-    public TokenInfoResult getUserInfo() {
+    public QueryTokenInfoCase.Response getUserInfo() {
         Authentication authentication = SecurityContextHolder
                 .getContext()
                 .getAuthentication();
-
-        return Optional.ofNullable(authentication).map(
-                element -> {
-                    User userDetails = (User) element.getPrincipal();
-
-                    List<String> roles = element
-                            .getAuthorities()
-                            .stream()
-                            .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-                    return TokenInfoResult.of(userDetails.getUsername(), roles);
-                }).orElse(null);
+        return QueryTokenInfoCase.toResponseFrom(authentication);
     }
 }

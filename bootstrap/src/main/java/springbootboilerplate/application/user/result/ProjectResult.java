@@ -1,6 +1,6 @@
 package springbootboilerplate.application.user.result;
 
-import cn.printf.springbootboilerplate.domain.user.User;
+import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

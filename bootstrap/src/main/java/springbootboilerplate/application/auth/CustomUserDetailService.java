@@ -1,13 +1,13 @@
 package springbootboilerplate.application.auth;
 
-import cn.printf.springbootboilerplate.domain.user.User;
+import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import cn.printf.springbootboilerplate.domain.user.UserRepository;
+import cn.printf.springbootboilerplate.usercontext.domain.user.UserRepository;
 
 /**
  * UserDetails 存权限系统的用户来源，只需要在获取凭证时读取用户信息，然后存储到 redis、jwt 中

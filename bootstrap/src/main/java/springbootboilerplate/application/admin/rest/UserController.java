@@ -1,6 +1,10 @@
 package springbootboilerplate.application.admin.rest;
 
+import cn.printf.springbootboilerplate.usercontext.domain.user.User;
+import cn.printf.springbootboilerplate.usercontext.domain.user.UserCriteria;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,12 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.admin.UserAdminAppService;
-import springbootboilerplate.application.admin.command.UserAddCommand;
-import springbootboilerplate.application.admin.query.UserCriteria;
-import springbootboilerplate.application.admin.command.UserEditCommand;
-import springbootboilerplate.application.admin.result.PageResource;
-import springbootboilerplate.application.admin.result.UserResource;
+import cn.printf.springbootboilerplate.usercontext.domain.UserDomainService;
+import springbootboilerplate.application.admin.usecase.UserAddCase;
+import springbootboilerplate.application.admin.usecase.UserEditCase;
+import springbootboilerplate.application.admin.usecase.UserQueryCase;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -26,35 +28,36 @@ import java.net.URI;
 @RequestMapping("/api/admin/users")
 public class UserController {
 
-    private UserAdminAppService userAdminAppService;
+    @Autowired
+    private UserDomainService userDomainService;
 
     /**
      * 根据搜索条件,获取用户列表
      */
     @GetMapping
-    public PageResource<UserResource> getUsers(UserCriteria userCriteria, Pageable pageable) {
-        return userAdminAppService.getUsers(userCriteria, pageable);
+    public Page<UserQueryCase.Response> getUsers(UserCriteria userCriteria, Pageable pageable) {
+        return userDomainService.getUsers(userCriteria, pageable).map(UserQueryCase::toResponseFrom);
     }
 
     @PostMapping
-    public ResponseEntity<UserResource> addUser(@RequestBody @Valid UserAddCommand userAddCommand) {
-        UserResource userResource = userAdminAppService.addUser(userAddCommand);
-
+    public ResponseEntity<UserAddCase.Response> addUser(@RequestBody @Valid UserAddCase.Request userAddRequest) {
+        // 对数据进行拆解，让不同的 domain service 执行
+        User user = userDomainService.addUser(UserAddCase.toCommandFrom(userAddRequest));
         return ResponseEntity.created(
-                URI.create("/api/users/" + userResource.getId())
-        ).body(userResource);
+                URI.create("/api/users/" + user.getId())
+        ).body(UserAddCase.toResponseFrom(user));
     }
 
     @PutMapping("{userId}")
-    public UserResource updateUser(
+    public void updateUser(
             @PathVariable long userId,
-            @RequestBody @Valid UserEditCommand userAddRequest
+            @RequestBody @Valid UserEditCase.Request userEditRequest
     ) {
-        return userAdminAppService.updateUser(userId, userAddRequest);
+        userDomainService.updateUser(userId, UserEditCase.toCommandFromRequest(userEditRequest));
     }
 
     @DeleteMapping("{userId}")
     public void deleteUser(@PathVariable long userId) {
-        userAdminAppService.deleteUser(userId);
+        userDomainService.deleteUser(userId);
     }
 }

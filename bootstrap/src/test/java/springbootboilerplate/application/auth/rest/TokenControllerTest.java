@@ -1,6 +1,6 @@
 package springbootboilerplate.application.auth.rest;
 
-import cn.printf.springbootboilerplate.domain.user.User;
+import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import springbootboilerplate.application.auth.APIBaseTest;
 import springbootboilerplate.application.auth.JWTTokenStore;
-import cn.printf.springbootboilerplate.domain.user.UserRepository;
+import cn.printf.springbootboilerplate.usercontext.domain.user.UserRepository;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
