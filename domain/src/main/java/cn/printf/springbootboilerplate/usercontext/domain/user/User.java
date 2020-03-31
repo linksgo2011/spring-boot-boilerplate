@@ -50,12 +50,12 @@ public class User {
     private String password;
 
     @ElementCollection
-    @CollectionTable(name = "user_role",joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     private List<String> roles = new ArrayList();
 
     @Column(name = "department_id")
-    private String departmentId;
+    private Long departmentId;
 
     private Timestamp createAt;
 

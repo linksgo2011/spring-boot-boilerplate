@@ -131,6 +131,12 @@
 - 跨上下文之间不允许任何关联
 - 业务上尽量不要做跨上下文的列表合并显示，除非
 
+## 推荐安装插件
+
+- findbugs 检查代码错误
+- GsonFormat json 转换为 java 对象
+- lombok 
+
 ## 参考项目
 
 - DDD 例子 https://gitee.com/xingfly/DDD_JPA_In_Action

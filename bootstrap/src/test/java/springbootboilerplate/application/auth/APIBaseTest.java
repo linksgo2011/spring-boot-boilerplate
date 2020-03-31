@@ -1,12 +1,17 @@
 package springbootboilerplate.application.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -26,6 +31,9 @@ public abstract class APIBaseTest {
 
     protected MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper mapper;
+
     @Before
     public void baseBefore() {
         this.mockMvc = MockMvcBuilders
@@ -33,5 +41,13 @@ public abstract class APIBaseTest {
                 .alwaysDo(MockMvcResultHandlers.print())
                 .apply(springSecurity())
                 .build();
+    }
+
+    private MockHttpServletRequestBuilder httpBuilder(String url, Object data) throws JsonProcessingException {
+        return MockMvcRequestBuilders
+                .post(url)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(data));
     }
 }

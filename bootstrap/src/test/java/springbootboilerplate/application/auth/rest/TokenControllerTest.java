@@ -11,29 +11,27 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import springbootboilerplate.application.auth.APIBaseTest;
 import springbootboilerplate.application.auth.JWTTokenStore;
-import cn.printf.springbootboilerplate.usercontext.domain.user.UserRepository;
+import springbootboilerplate.application.auth.fixture.UserFixture;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static springbootboilerplate.application.auth.fixture.UserFixture.prepareAdminUser;
 
 public class TokenControllerTest extends APIBaseTest {
-
-    @Autowired
-    private UserRepository userRepository;
-
     @Autowired
     ObjectMapper mapper;
 
     @Autowired
     JWTTokenStore jwtTokenStore;
 
+    @Autowired
+    UserFixture userFixture;
+
     @Test
     public void should_get_validated_token() throws Exception {
-        User user = userRepository.save(prepareAdminUser());
+        User adminUser = userFixture.createAdminUser();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post("/v1/token")
@@ -41,8 +39,8 @@ public class TokenControllerTest extends APIBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(
                         ImmutableMap.of(
-                                "username", user.getUsername(),
-                                "password", user.getPassword()
+                                "username", adminUser.getUsername(),
+                                "password", "123456"
                         )
                 ));
 
@@ -54,7 +52,7 @@ public class TokenControllerTest extends APIBaseTest {
     @Test
     @WithMockUser(username = "zhangsan", roles = {})
     public void get_user_info() throws Exception {
-        User user = userRepository.save(prepareAdminUser());
+        User adminUser = userFixture.createAdminUser();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get("/v1/token/info")
@@ -63,7 +61,7 @@ public class TokenControllerTest extends APIBaseTest {
 
         this.mockMvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.username", is(adminUser.getUsername())))
                 .andExpect(jsonPath("$.roles", hasItems()));
     }
 }

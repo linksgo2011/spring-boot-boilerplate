@@ -41,9 +41,10 @@ public class UserDomainService {
         User user = User
                 .builder()
                 .email(userAddCommand.getEmail())
-                .username(userAddCommand.getEmail())
+                .username(userAddCommand.getUsername())
                 .phone(userAddCommand.getPhone())
                 .enabled(userAddCommand.getEnabled())
+                .departmentId(userAddCommand.getDepartmentId())
                 .password(hashedPassword)
                 .build();
 
@@ -62,7 +63,10 @@ public class UserDomainService {
         userRepository.saveAndFlush(user);
     }
 
+    /**
+     * 删除接口设计成幂等，客户端报错后可以重试
+     */
     public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+        userRepository.findById(userId).ifPresent(user -> userRepository.delete(user));
     }
 }

@@ -2,8 +2,8 @@ INSERT INTO `department` VALUES (2, '研发部', 7, 1, '2019-03-25 09:15:32','20
 INSERT INTO `department` VALUES (5, '运维部', 7, 1, '2019-03-25 09:20:44','2019-03-25 09:14:05');
 INSERT INTO `department` VALUES (6, '测试部', 8, 1, '2019-03-25 09:52:18','2019-03-25 09:14:05');
 
-INSERT INTO `role` VALUES (1, '管理员', 'admin', '系统管理员', '2018-11-23 11:04:37','2018-11-23 11:04:37');
-INSERT INTO `role` VALUES (2, '普通用户', 'user', '普通用户',  '2018-11-23 13:09:06', '2018-11-23 11:04:37');
+INSERT INTO `role` VALUES (1, '管理员', 'ROLE_ADMIN', '系统管理员', '2018-11-23 11:04:37','2018-11-23 11:04:37');
+INSERT INTO `role` VALUES (2, '普通用户', 'ROLE_USER', '普通用户',  '2018-11-23 13:09:06', '2018-11-23 11:04:37');
 
 INSERT INTO `user_role` VALUES (1, 1);
 INSERT INTO `user_role` VALUES (1, 2);

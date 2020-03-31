@@ -34,5 +34,5 @@ logging:
     root: info
 
 jwt:
-  expiration: 30
+  expiration: 1800
   secret: "please change me"

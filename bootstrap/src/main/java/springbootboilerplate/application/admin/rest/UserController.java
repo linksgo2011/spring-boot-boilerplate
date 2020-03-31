@@ -1,5 +1,6 @@
 package springbootboilerplate.application.admin.rest;
 
+import cn.printf.springbootboilerplate.usercontext.domain.UserDomainService;
 import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import cn.printf.springbootboilerplate.usercontext.domain.user.UserCriteria;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import cn.printf.springbootboilerplate.usercontext.domain.UserDomainService;
 import springbootboilerplate.application.admin.usecase.UserAddCase;
 import springbootboilerplate.application.admin.usecase.UserEditCase;
 import springbootboilerplate.application.admin.usecase.UserQueryCase;
@@ -25,7 +26,8 @@ import java.net.URI;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/admin/users")
+@RequestMapping("/api/users")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class UserController {
 
     @Autowired

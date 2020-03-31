@@ -1,5 +1,6 @@
 apply plugin: 'org.springframework.boot'
 apply from: "${rootProject.projectDir}/gradle/boot-info.gradle"
+apply plugin: 'jacoco'
 
 buildDir = './out'
 
@@ -13,7 +14,6 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // database
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'mysql:mysql-connector-java'
 
     compile 'org.flywaydb:flyway-core'

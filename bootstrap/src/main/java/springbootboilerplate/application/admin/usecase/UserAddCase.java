@@ -20,21 +20,18 @@ public class UserAddCase {
     public static class Request {
         @NotNull
         private String username;
-
         @NotNull
         private String email;
-
         @NotNull
         private String phone;
-
         @NotNull
         private Boolean enabled;
-
         @NotNull
         private Long departmentId;
     }
 
     @NoArgsConstructor
+    @AllArgsConstructor(staticName = "of")
     @Data
     public static class Response {
         private String username;
