@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+
 @Service
 public class UserDomainService {
     private static final String DEFAULT_PASSWORD = "123456";
@@ -22,10 +24,6 @@ public class UserDomainService {
 
     @Autowired
     private PasswordEncoder encoder;
-
-    public Page<User> getUsers(UserCriteria userCriteria, Pageable pageable) {
-        return userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable);
-    }
 
     @Transactional(rollbackFor = Exception.class)
     public User addUser(UserAddCommand userAddCommand) {
@@ -51,6 +49,13 @@ public class UserDomainService {
         return userRepository.saveAndFlush(user);
     }
 
+    /**
+     * 删除接口设计成幂等，客户端报错后可以重试
+     */
+    public void deleteUser(Long userId) {
+        userRepository.findById(userId).ifPresent(user -> userRepository.delete(user));
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void updateUser(Long userId, UserEditCommand userEditCommand) {
         User user = userRepository.getOne(userId);
@@ -59,14 +64,12 @@ public class UserDomainService {
         user.setEmail(userEditCommand.getEmail());
         user.setPhone(userEditCommand.getPhone());
         user.setUsername(userEditCommand.getUsername());
-
+        user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
+        
         userRepository.saveAndFlush(user);
     }
 
-    /**
-     * 删除接口设计成幂等，客户端报错后可以重试
-     */
-    public void deleteUser(Long userId) {
-        userRepository.findById(userId).ifPresent(user -> userRepository.delete(user));
+    public Page<User> getUsers(UserCriteria userCriteria, Pageable pageable) {
+        return userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable);
     }
 }

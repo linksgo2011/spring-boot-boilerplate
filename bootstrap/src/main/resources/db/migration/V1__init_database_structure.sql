@@ -36,6 +36,6 @@ CREATE TABLE `user`  (
 
 CREATE TABLE `user_role`  (
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
-  PRIMARY KEY (`user_id`, `role_id`)
+  `role` varchar(255) NOT NULL COMMENT '角色名称',
+  PRIMARY KEY (`user_id`, `role`)
 );

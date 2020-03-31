@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.admin.usecase.UserAddCase;
-import springbootboilerplate.application.admin.usecase.UserEditCase;
-import springbootboilerplate.application.admin.usecase.UserQueryCase;
+import springbootboilerplate.application.admin.usecase.AddUserCase;
+import springbootboilerplate.application.admin.usecase.GetUserCase;
+import springbootboilerplate.application.admin.usecase.QueryUserCase;
+import springbootboilerplate.application.admin.usecase.UpdateUserCase;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -33,33 +34,38 @@ public class UserController {
     @Autowired
     private UserDomainService userDomainService;
 
-    /**
-     * 根据搜索条件,获取用户列表
-     */
-    @GetMapping
-    public Page<UserQueryCase.Response> getUsers(UserCriteria userCriteria, Pageable pageable) {
-        return userDomainService.getUsers(userCriteria, pageable).map(UserQueryCase::toResponseFrom);
-    }
-
     @PostMapping
-    public ResponseEntity<UserAddCase.Response> addUser(@RequestBody @Valid UserAddCase.Request userAddRequest) {
+    public ResponseEntity<AddUserCase.Response> addUser(@RequestBody @Valid AddUserCase.Request userAddRequest) {
         // 对数据进行拆解，让不同的 domain service 执行
-        User user = userDomainService.addUser(UserAddCase.toCommandFrom(userAddRequest));
+        User user = userDomainService.addUser(AddUserCase.toCommandFrom(userAddRequest));
         return ResponseEntity.created(
                 URI.create("/api/users/" + user.getId())
-        ).body(UserAddCase.toResponseFrom(user));
-    }
-
-    @PutMapping("{userId}")
-    public void updateUser(
-            @PathVariable long userId,
-            @RequestBody @Valid UserEditCase.Request userEditRequest
-    ) {
-        userDomainService.updateUser(userId, UserEditCase.toCommandFromRequest(userEditRequest));
+        ).body(AddUserCase.toResponseFrom(user));
     }
 
     @DeleteMapping("{userId}")
     public void deleteUser(@PathVariable long userId) {
         userDomainService.deleteUser(userId);
+    }
+
+    @PutMapping("{userId}")
+    public void updateUser(
+            @PathVariable long userId,
+            @RequestBody @Valid UpdateUserCase.Request userEditRequest
+    ) {
+        userDomainService.updateUser(userId, UpdateUserCase.toCommandFromRequest(userEditRequest));
+    }
+
+    /**
+     * 根据搜索条件,获取用户列表
+     */
+    @GetMapping
+    public Page<QueryUserCase.Response> queryUser(UserCriteria userCriteria, Pageable pageable) {
+        return userDomainService.getUsers(userCriteria, pageable).map(QueryUserCase::toResponseFrom);
+    }
+
+    @GetMapping("{userId}")
+    public Page<GetUserCase.Response> getUser(UserCriteria userCriteria, Pageable pageable) {
+        return userDomainService.getUsers(userCriteria, pageable).map(GetUserCase::toResponseFrom);
     }
 }

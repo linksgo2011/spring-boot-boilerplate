@@ -1,21 +1,21 @@
 package springbootboilerplate.application.auth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.jdbc.JdbcTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 import javax.transaction.Transactional;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -34,20 +34,25 @@ public abstract class APIBaseTest {
     @Autowired
     ObjectMapper mapper;
 
+    @Autowired
+    private DataSource dataSource;
+
+    private JdbcTemplate jdbcTemplate;
+
+    @PostConstruct
+    private void postConstruct() {
+        jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
     @Before
     public void baseBefore() {
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "user");
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "user_role");
+
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(this.wac)
                 .alwaysDo(MockMvcResultHandlers.print())
                 .apply(springSecurity())
                 .build();
-    }
-
-    private MockHttpServletRequestBuilder httpBuilder(String url, Object data) throws JsonProcessingException {
-        return MockMvcRequestBuilders
-                .post(url)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(data));
     }
 }

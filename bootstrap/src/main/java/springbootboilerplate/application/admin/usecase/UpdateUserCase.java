@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import javax.validation.constraints.NotNull;
 
 
-public class UserEditCase {
+public class UpdateUserCase {
 
     @NoArgsConstructor
     @AllArgsConstructor(staticName = "of")
@@ -28,7 +28,7 @@ public class UserEditCase {
         private Boolean enabled;
     }
 
-    public static UserEditCommand toCommandFromRequest(UserEditCase.Request request) {
+    public static UserEditCommand toCommandFromRequest(UpdateUserCase.Request request) {
         return new ModelMapper().map(request, UserEditCommand.class);
     }
 }
