@@ -1,4 +1,4 @@
-package springbootboilerplate.application.auth;
+package springbootboilerplate.application;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;

@@ -1,6 +1,6 @@
 package cn.printf.springbootboilerplate.usercontext.domain;
 
-import cn.printf.springbootboilerplate.common.CriteriaHelper;
+import cn.printf.springbootboilerplate.common.QueryProcessor;
 import cn.printf.springbootboilerplate.usercontext.domain.command.UserAddCommand;
 import cn.printf.springbootboilerplate.usercontext.domain.command.UserEditCommand;
 import cn.printf.springbootboilerplate.usercontext.domain.user.User;
@@ -70,7 +70,7 @@ public class UserDomainService {
     }
 
     public Page<User> getUsers(UserCriteria userCriteria, Pageable pageable) {
-        return userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable);
+        return userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryProcessor.getPredicate(root, userCriteria, criteriaBuilder), pageable);
     }
 
     public User getUser(Long userId) {

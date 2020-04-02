@@ -1,4 +1,4 @@
-package springbootboilerplate.application.auth.fixture;
+package springbootboilerplate.application.fixture;
 
 import cn.printf.springbootboilerplate.usercontext.domain.PasswordEncoder;
 import cn.printf.springbootboilerplate.usercontext.domain.user.User;

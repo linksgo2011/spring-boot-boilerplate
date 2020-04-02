@@ -31,10 +31,10 @@ dependencies {
 
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    // 用于模拟登陆的用户
-    testImplementation 'org.springframework.security:spring-security-test'
     // 用于测试的内存数据库
     testImplementation 'com.h2database:h2:1.4.199'
+    // 用于模拟登陆的用户
+    testImplementation 'org.springframework.security:spring-security-test'
 
     runtime('org.springframework.boot:spring-boot-devtools')
 }

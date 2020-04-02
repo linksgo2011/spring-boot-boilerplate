@@ -1,4 +1,4 @@
-package springbootboilerplate.application.auth;
+package springbootboilerplate.application;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

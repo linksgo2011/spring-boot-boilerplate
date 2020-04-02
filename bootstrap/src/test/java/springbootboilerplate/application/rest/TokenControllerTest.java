@@ -1,4 +1,4 @@
-package springbootboilerplate.application.auth.rest;
+package springbootboilerplate.application.rest;
 
 import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,9 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import springbootboilerplate.application.auth.APIBaseTest;
-import springbootboilerplate.application.auth.JWTTokenStore;
-import springbootboilerplate.application.auth.fixture.UserFixture;
+import springbootboilerplate.application.APIBaseTest;
+import springbootboilerplate.application.JWTTokenStore;
+import springbootboilerplate.application.fixture.UserFixture;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;

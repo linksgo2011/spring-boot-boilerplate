@@ -1,5 +1,6 @@
 package cn.printf.springbootboilerplate.usercontext.domain.user;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Component;
@@ -13,4 +14,5 @@ public interface UserRepository extends JpaRepository<User, Long>,
     Optional<User> findByUsername(String username);
 
     Optional<User> findByEmail(String email);
+
 }

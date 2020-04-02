@@ -16,9 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import springbootboilerplate.application.auth.JWTTokenStore;
-import springbootboilerplate.application.auth.SimpleTokenAuthenticationFilter;
-import springbootboilerplate.application.auth.CustomUserDetailService;
+import springbootboilerplate.application.JWTTokenStore;
+import springbootboilerplate.application.SimpleTokenAuthenticationFilter;
+import springbootboilerplate.application.CustomUserDetailService;
 
 import javax.servlet.http.HttpServletRequest;
 

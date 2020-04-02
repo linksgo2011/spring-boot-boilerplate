@@ -1,4 +1,4 @@
-package springbootboilerplate.application.auth;
+package springbootboilerplate.application;
 
 import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import lombok.AllArgsConstructor;

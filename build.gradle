@@ -55,6 +55,7 @@ subprojects {
     dependencies {
         // tool
         compile 'com.google.guava:guava:28.2-jre'
+        compile 'commons-lang:commons-lang:2.6'
 
         compileOnly "org.projectlombok:lombok"
         testCompileOnly "org.projectlombok:lombok"

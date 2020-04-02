@@ -1,4 +1,4 @@
-package springbootboilerplate.application.auth;
+package springbootboilerplate.application;
 
 import com.google.common.base.Strings;
 import org.springframework.context.ApplicationEventPublisher;
