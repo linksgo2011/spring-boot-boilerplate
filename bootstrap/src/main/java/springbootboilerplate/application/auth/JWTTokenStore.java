@@ -29,13 +29,13 @@ public class JWTTokenStore {
     @Value("${jwt.expiration}")
     private int expiration;
 
-    static final String AUTHORITIES_CLAIM_KEY = "roles";
+    static final String AUTHORITIES_CLAIM_KEY = "authorities";
 
     AbstractAuthenticationToken buildAuthentication(String token) {
         Claims claims = getClaimsFromToken(token);
-        List<String> roles = claims.get(AUTHORITIES_CLAIM_KEY, List.class);
+        List<String> authorities = claims.get(AUTHORITIES_CLAIM_KEY, List.class);
 
-        List<SimpleGrantedAuthority> grantedAuthorities = roles.stream().map(
+        List<SimpleGrantedAuthority> grantedAuthorities = authorities.stream().map(
                 SimpleGrantedAuthority::new
         ).collect(Collectors.toList());
 

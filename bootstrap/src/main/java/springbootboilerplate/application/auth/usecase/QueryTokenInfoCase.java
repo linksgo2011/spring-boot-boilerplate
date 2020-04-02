@@ -18,18 +18,18 @@ public class QueryTokenInfoCase {
     @Data
     public static class Response {
         private String username;
-        private List<String> roles;
+        private List<String> authorities;
     }
 
     public static Response toResponseFrom(Authentication authentication) {
         return Optional.ofNullable(authentication).map(
                 element -> {
                     User userDetails = (User) element.getPrincipal();
-                    List<String> roles = element
+                    List<String> authorities = element
                             .getAuthorities()
                             .stream()
                             .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-                    return Response.of(userDetails.getUsername(), roles);
+                    return Response.of(userDetails.getUsername(), authorities);
                 }).orElse(null);
     }
 }

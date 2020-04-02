@@ -62,6 +62,6 @@ public class TokenControllerTest extends APIBaseTest {
         this.mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username", is(adminUser.getUsername())))
-                .andExpect(jsonPath("$.roles", hasItems()));
+                .andExpect(jsonPath("$.authorities", hasItems()));
     }
 }
