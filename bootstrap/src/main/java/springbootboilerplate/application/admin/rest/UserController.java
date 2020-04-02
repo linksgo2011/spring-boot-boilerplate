@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public Page<GetUserCase.Response> getUser(UserCriteria userCriteria, Pageable pageable) {
-        return userDomainService.getUsers(userCriteria, pageable).map(GetUserCase::toResponseFrom);
+    public GetUserCase.Response getUser(@PathVariable long userId) {
+        return GetUserCase.toResponseFrom(userDomainService.getUser(userId));
     }
 }

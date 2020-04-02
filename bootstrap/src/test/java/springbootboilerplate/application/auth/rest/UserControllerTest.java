@@ -4,6 +4,7 @@ import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -15,11 +16,8 @@ import springbootboilerplate.application.auth.APIBaseTest;
 import springbootboilerplate.application.auth.JWTTokenStore;
 import springbootboilerplate.application.auth.fixture.UserFixture;
 
-import static io.netty.channel.group.ChannelMatchers.isNot;
-import static java.lang.Thread.sleep;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -84,7 +82,8 @@ public class UserControllerTest extends APIBaseTest {
     @Test
     @WithMockUser(username = "zhangsan", roles = {"ADMIN"})
     public void should_update_user() throws Exception {
-        User normalUser = userFixture.createNormalUser();
+        User normalUser = clone(userFixture.createNormalUser(), User.class);
+        System.out.println(normalUser);
 
         UpdateUserCase.Request userAddRequest = UpdateUserCase.Request.of(
                 "newTest1",
@@ -107,6 +106,40 @@ public class UserControllerTest extends APIBaseTest {
         assertThat(updatedUser.getPhone(), is(userAddRequest.getPhone()));
         assertThat(updatedUser.getEnabled(), is(userAddRequest.getEnabled()));
 
+        System.out.println(updatedUser);
+        System.out.println(normalUser);
         assertThat(updatedUser.getUpdateAt(), not(normalUser.getUpdateAt()));
+    }
+
+    @Test
+    @WithMockUser(username = "zhangsan", roles = {"ADMIN"})
+    public void should_delete_user() throws Exception {
+        User normalUser = userFixture.createNormalUser();
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete("/api/users/{userId}", normalUser.getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        this.mockMvc.perform(request).andExpect(status().isOk());
+
+        assertThat(userFixture.userRepository.existsById(normalUser.getId()), is(false));
+    }
+
+    @Test
+    @WithMockUser(username = "zhangsan", roles = {"ADMIN"})
+    public void should_get_user() throws Exception {
+        User normalUser = userFixture.createAdminUser();
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get("/api/users/{userId}", normalUser.getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        this.mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is("zhangsan")))
+                .andExpect(jsonPath("$.email", is("zhangsan@email.com")))
+                .andExpect(jsonPath("$.phone", is("13668193903")))
+                .andExpect(jsonPath("$.enabled", is(true)))
+                .andExpect(jsonPath("$.departmentId", is(10)));
     }
 }

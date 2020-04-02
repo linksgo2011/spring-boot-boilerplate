@@ -65,11 +65,15 @@ public class UserDomainService {
         user.setPhone(userEditCommand.getPhone());
         user.setUsername(userEditCommand.getUsername());
         user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
-        
+
         userRepository.saveAndFlush(user);
     }
 
     public Page<User> getUsers(UserCriteria userCriteria, Pageable pageable) {
         return userRepository.findAll((root, criteriaQuery, criteriaBuilder) -> CriteriaHelper.getPredicate(root, userCriteria, criteriaBuilder), pageable);
+    }
+
+    public User getUser(Long userId) {
+        return userRepository.getOne(userId);
     }
 }

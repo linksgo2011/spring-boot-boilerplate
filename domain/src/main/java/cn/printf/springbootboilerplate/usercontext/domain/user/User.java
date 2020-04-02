@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(of = "username")
-@ToString(of = "username")
+@ToString
 @Getter
 @Setter
 @Accessors(chain = true)

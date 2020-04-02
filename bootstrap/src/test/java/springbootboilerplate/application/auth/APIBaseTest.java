@@ -17,6 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
+import java.io.IOException;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
@@ -54,5 +55,10 @@ public abstract class APIBaseTest {
                 .alwaysDo(MockMvcResultHandlers.print())
                 .apply(springSecurity())
                 .build();
+    }
+
+    public <T> T clone(T object, Class<T> clazzType) throws IOException {
+        String jsonStr = mapper.writeValueAsString(object);
+        return mapper.readValue(jsonStr, clazzType);
     }
 }
