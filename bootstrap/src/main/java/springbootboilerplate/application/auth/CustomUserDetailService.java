@@ -1,4 +1,4 @@
-package springbootboilerplate.application;
+package springbootboilerplate.application.auth;
 
 import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;

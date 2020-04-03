@@ -1,4 +1,4 @@
-package springbootboilerplate.application.usecase;
+package springbootboilerplate.application.auth.usecase;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

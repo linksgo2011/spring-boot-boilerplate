@@ -42,6 +42,7 @@ public class UserFixture {
         user.setRoles(new ArrayList() {{
             add("ADMIN");
         }});
+        user.setDepartmentId(10L);
         user.setCreateAt(new Timestamp(System.currentTimeMillis()));
         user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
         return user;

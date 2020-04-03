@@ -1,4 +1,4 @@
-package springbootboilerplate.application.rest;
+package springbootboilerplate.application.auth.rest;
 
 import cn.printf.springbootboilerplate.usercontext.domain.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import springbootboilerplate.application.APIBaseTest;
-import springbootboilerplate.application.JWTTokenStore;
+import springbootboilerplate.application.auth.JWTTokenStore;
 import springbootboilerplate.application.admin.usecase.AddUserCase;
 import springbootboilerplate.application.admin.usecase.UpdateUserCase;
 import springbootboilerplate.application.fixture.UserFixture;
@@ -44,7 +44,7 @@ public class UserControllerTest extends APIBaseTest {
         );
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post("/api/users")
+                .post("/api/v1/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(userAddRequest));
@@ -65,7 +65,7 @@ public class UserControllerTest extends APIBaseTest {
         userFixture.createNormalUser();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .get("/api/users")
+                .get("/api/v1/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -92,7 +92,7 @@ public class UserControllerTest extends APIBaseTest {
         );
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .put("/api/users/{userId}", normalUser.getId())
+                .put("/api/v1/users/{userId}", normalUser.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(userAddRequest));
@@ -115,7 +115,7 @@ public class UserControllerTest extends APIBaseTest {
     public void should_delete_user() throws Exception {
         User normalUser = userFixture.createNormalUser();
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .delete("/api/users/{userId}", normalUser.getId())
+                .delete("/api/v1/users/{userId}", normalUser.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -129,7 +129,7 @@ public class UserControllerTest extends APIBaseTest {
     public void should_get_user() throws Exception {
         User normalUser = userFixture.createAdminUser();
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .get("/api/users/{userId}", normalUser.getId())
+                .get("/api/v1/users/{userId}", normalUser.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

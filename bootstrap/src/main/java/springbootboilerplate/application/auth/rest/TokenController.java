@@ -1,4 +1,4 @@
-package springbootboilerplate.application.rest;
+package springbootboilerplate.application.auth.rest;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import springbootboilerplate.application.JWTTokenStore;
-import springbootboilerplate.application.usecase.FetchTokenCase;
-import springbootboilerplate.application.usecase.QueryTokenInfoCase;
+import springbootboilerplate.application.auth.JWTTokenStore;
+import springbootboilerplate.application.auth.usecase.FetchTokenCase;
+import springbootboilerplate.application.auth.usecase.QueryTokenInfoCase;
 
 import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/token")
+@RequestMapping("/api/v1/token")
 public class TokenController {
 
     @Autowired

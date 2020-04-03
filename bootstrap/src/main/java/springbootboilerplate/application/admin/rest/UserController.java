@@ -27,7 +27,7 @@ import java.net.URI;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class UserController {
 
@@ -39,7 +39,7 @@ public class UserController {
         // 对数据进行拆解，让不同的 domain service 执行
         User user = userDomainService.addUser(AddUserCase.toCommandFrom(userAddRequest));
         return ResponseEntity.created(
-                URI.create("/api/users/" + user.getId())
+                URI.create("/api/v1/users/" + user.getId())
         ).body(AddUserCase.toResponseFrom(user));
     }
 
