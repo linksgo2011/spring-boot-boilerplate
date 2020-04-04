@@ -75,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 开始配置权限设置
                 .and().authorizeRequests()
                 // 登录相关无需认证
-                .antMatchers("/v1/token").permitAll()
+                .antMatchers("/api/v1/token").permitAll()
                 // 剩下的所有请求都需要认证
                 .anyRequest().authenticated();
 
